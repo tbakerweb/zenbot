@@ -265,13 +265,13 @@ module.exports = function (program, conf) {
           opts.query.time['$gte'] = query_start
         }
         var collectionCursor = tradesCollection
-          .find(opts.query)
-          .sort(opts.sort)
-          .limit(opts.limit)
-
+        .find(opts.query)
+        .sort(opts.sort)
+        .limit(opts.limit)
+        
         var totalTrades = await collectionCursor.count(true)
         const collectionCursorStream = collectionCursor.stream()
-
+        
         var numTrades = 0
         var lastTrade
 
