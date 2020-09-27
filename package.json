@@ -20,7 +20,8 @@
     "test-one": "jasmine $PATH_TO_TEST",
     "postinstall": "node post_install.js",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "simulate-tbw-local-binance-trend_ema": "node zenbot.js sim binanceus.BTC-USD --conf tbwsim.js --enable_stats --days 1"
   },
   "lint-staged": {
     "*.js": [
