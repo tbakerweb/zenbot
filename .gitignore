@@ -41,4 +41,3 @@ gen.*.sh
 scripts/auto_backtester/backtesting_*.csv
 database/*
 .vscode/
-*tbw*

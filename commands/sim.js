@@ -237,6 +237,8 @@ module.exports = function (program, conf) {
       }
 
       var getNext = async () => {
+        // Debug
+        // console.log('getNext Called: ')
         var opts = {
           query: {
             selector: so.selector.normalized
@@ -248,6 +250,9 @@ module.exports = function (program, conf) {
         if (so.end) {
           opts.query.time = { $lte: so.end }
         }
+
+        // Debug
+        // console.log('getNext Checking Cursor: ',cursor)
         if (cursor) {
           if (reversing) {
             opts.query.time = {}
@@ -264,12 +269,17 @@ module.exports = function (program, conf) {
           if (!opts.query.time) opts.query.time = {}
           opts.query.time['$gte'] = query_start
         }
+        
+        // Debug
+        // console.log('getNext getting New collectionCursor from trades collection')
         var collectionCursor = tradesCollection
         .find(opts.query)
         .sort(opts.sort)
         .limit(opts.limit)
         
+        // console.log('getNext getting collectionCursor Count')
         var totalTrades = await collectionCursor.count(true)
+        // console.log('getNext getting collectionCursor Count was :', totalTrades)
         const collectionCursorStream = collectionCursor.stream()
         
         var numTrades = 0
@@ -300,6 +310,9 @@ module.exports = function (program, conf) {
         }
 
         collectionCursorStream.on('data', function(trade) {
+          // Debug
+          // console.log('ReceivedDataFromCursorStream: ', trade)
+
           lastTrade = trade
           numTrades++
           if (so.symmetrical && reversing) {

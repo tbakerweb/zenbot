@@ -1,0 +1,177 @@
+{
+    "mongo": {
+        "db": "zenbot4",
+        "connectionString": null,
+        "host": "localhost",
+        "port": 27017,
+        "username": null,
+        "password": null,
+        "replicaSet": null,
+        "authMechanism": null
+    },
+    "selector": "binanceus.BTC-USD",
+    "strategy": "stop_profit_rsi",
+    "buy_pct": 20,
+    "sell_pct": 100,
+    "sell_stop_pct": 0,
+    "buy_stop_pct": 0,
+    "profit_stop_enable_pct": 1,
+    "profit_stop_pct": 0.5,
+    "max_sell_loss_pct": 0,
+    "max_buy_loss_pct": 5,
+    "markdown_buy_pct": 0.075,
+    "markup_sell_pct": 0.075,
+    "order_type": "maker",
+    "max_slippage_pct": 1.5,
+    "order_adjust_time": 5000,
+    "order_poll_time": 5000,
+    "wait_for_settlement": 5000,
+    "post_only": false,
+    "use_fee_asset": false,
+    "days": 60,
+    "keep_lookback_periods": 50000,
+    "poll_trades": 30000,
+    "currency_capital": 450,
+    "asset_capital": 0,
+    "symmetrical": false,
+    "rsi_periods": 14,
+    "balance_snapshot_period": "15m",
+    "avg_slippage_pct": 0.045,
+    "cancel_after": "day",
+    "use_prev_trades": true,
+    "min_prev_trades": 5,
+    "gda": {
+        "key": "YOUR-API-KEY",
+        "b64secret": "YOUR-API-SECRET",
+        "passphrase": "YOUR-API-PASSPHRASE"
+    },
+    "poloniex": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "kraken": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET",
+        "tosagree": "disagree"
+    },
+    "binance": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "binanceus": {
+        "key": "UdVfEToJVpzu0UGg5EGKEWaQULOnG16qyYTcjkuCDuWQZ460gpOvAPuWgsC1aQaA",
+        "secret": "5U6Do6mi12WeX6djYSRPF6gJUKyapAxKeenW9XxeDRHb3eqOD5c2LsF8gyeY05gt"
+    },
+    "bittrex": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "bitfinex": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET",
+        "wallet": "exchange"
+    },
+    "bitstamp": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET",
+        "client_id": "YOUR-CLIENT-ID"
+    },
+    "cexio": {
+        "username": "YOUR-CLIENT-ID",
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "quadriga": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET",
+        "client_id": "YOUR-CLIENT-ID"
+    },
+    "wexnz": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "gemini": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET",
+        "sandbox": true
+    },
+    "hitbtc": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "therock": {
+        "key": "YOUR-API-KEY",
+        "secret": "YOUR-API-SECRET"
+    },
+    "notifiers": {
+        "only_completed_trades": false,
+        "xmpp": {
+            "on": false,
+            "jid": "trader@domain.com",
+            "password": "",
+            "host": "domain.com",
+            "port": 5222,
+            "to": "MeMyselfAndI@domain.com"
+        },
+        "pushbullet": {
+            "on": false,
+            "key": "",
+            "deviceID": ""
+        },
+        "ifttt": {
+            "on": false,
+            "key": "",
+            "eventName": "zenbot"
+        },
+        "slack": {
+            "on": false,
+            "webhook_url": ""
+        },
+        "adamant": {
+            "on": false,
+            "nodes": [
+                "https:"
+            ],
+            "fromPassphrase": "",
+            "toAddresses": [
+                ""
+            ]
+        },
+        "discord": {
+            "on": true,
+            "id": "758521595949613109",
+            "token": "rMExeBy9Iy7xlRCEP6Warlq_GZP--qNCUBNhNVQDYpjLVg5dvOj_ul6PuXp-howJCRuk",
+            "username": "tbwcryptobot",
+            "avatar_url": "",
+            "color": null
+        },
+        "prowl": {
+            "on": false,
+            "key": ""
+        },
+        "textbelt": {
+            "on": false,
+            "phone": "",
+            "key": ""
+        },
+        "pushover": {
+            "on": false,
+            "token": "",
+            "user": "",
+            "priority": "0"
+        },
+        "telegram": {
+            "on": false,
+            "interactive": false,
+            "bot_token": "1252168933:AAEdTGmkE5acxMRRkH8k6FoR1tBbwAfzf00",
+            "chat_id": "@tbwcrypto"
+        }
+    },
+    "output": {
+        "api": {
+            "on": false,
+            "ip": "0.0.0.0",
+            "port": 17365
+        }
+    }
+}
