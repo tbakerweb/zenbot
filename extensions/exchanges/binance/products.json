@@ -11746,5 +11746,192 @@
     "increment": "0.01000000",
     "asset_increment": "0.10000000",
     "label": "LINK/BKRW"
+  },
+  {
+    "id": "FLMBNB",
+    "asset": "FLM",
+    "currency": "BNB",
+    "min_size": "0.10000000",
+    "max_size": "9000000.00000000",
+    "min_total": "0.10000000",
+    "increment": "0.00001000",
+    "asset_increment": "0.10000000",
+    "label": "FLM/BNB"
+  },
+  {
+    "id": "FLMBTC",
+    "asset": "FLM",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "FLM/BTC"
+  },
+  {
+    "id": "FLMBUSD",
+    "asset": "FLM",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "FLM/BUSD"
+  },
+  {
+    "id": "FLMUSDT",
+    "asset": "FLM",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "FLM/USDT"
+  },
+  {
+    "id": "SCRTBTC",
+    "asset": "SCRT",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "SCRT/BTC"
+  },
+  {
+    "id": "SCRTETH",
+    "asset": "SCRT",
+    "currency": "ETH",
+    "min_size": "0.01000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.01000000",
+    "increment": "0.00000100",
+    "asset_increment": "0.01000000",
+    "label": "SCRT/ETH"
+  },
+  {
+    "id": "CAKEBNB",
+    "asset": "CAKE",
+    "currency": "BNB",
+    "min_size": "0.10000000",
+    "max_size": "9000000.00000000",
+    "min_total": "0.10000000",
+    "increment": "0.00001000",
+    "asset_increment": "0.10000000",
+    "label": "CAKE/BNB"
+  },
+  {
+    "id": "CAKEBUSD",
+    "asset": "CAKE",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "CAKE/BUSD"
+  },
+  {
+    "id": "SPARTABNB",
+    "asset": "SPARTA",
+    "currency": "BNB",
+    "min_size": "1.00000000",
+    "max_size": "9000000.00000000",
+    "min_total": "0.10000000",
+    "increment": "0.00000100",
+    "asset_increment": "1.00000000",
+    "label": "SPARTA/BNB"
+  },
+  {
+    "id": "UNIUPUSDT",
+    "asset": "UNIUP",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "UNIUP/USDT"
+  },
+  {
+    "id": "UNIDOWNUSDT",
+    "asset": "UNIDOWN",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "UNIDOWN/USDT"
+  },
+  {
+    "id": "ORNBTC",
+    "asset": "ORN",
+    "currency": "BTC",
+    "min_size": "0.01000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000010",
+    "asset_increment": "0.01000000",
+    "label": "ORN/BTC"
+  },
+  {
+    "id": "ORNUSDT",
+    "asset": "ORN",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "ORN/USDT"
+  },
+  {
+    "id": "TRXNGN",
+    "asset": "TRX",
+    "currency": "NGN",
+    "min_size": "0.01000000",
+    "max_size": "922328.00000000",
+    "min_total": "500.00000000",
+    "increment": "0.01000000",
+    "asset_increment": "0.01000000",
+    "label": "TRX/NGN"
+  },
+  {
+    "id": "SXPTRY",
+    "asset": "SXP",
+    "currency": "TRY",
+    "min_size": "0.01000000",
+    "max_size": "100000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "SXP/TRY"
+  },
+  {
+    "id": "UTKBTC",
+    "asset": "UTK",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "UTK/BTC"
+  },
+  {
+    "id": "UTKUSDT",
+    "asset": "UTK",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "UTK/USDT"
   }
 ]
