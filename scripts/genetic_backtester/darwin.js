@@ -23,6 +23,10 @@
  * --minTrades=<int>                      Minimum wins before generation is considured fit to evolve
  * --fitnessCalcType=<wl / profit / classic / profitwl> Default: Classic. wl will score the highes for wins and losses, profit doesn't care about wins and losses only the higest end balance, classic uses original claculation / profitwl tries to get the highest profit using the lowest win/loss ratio
  *
+ * 
+ *    TBW:
+ *      ./darwin --selector="binanceus.BTC-USD" --days="14" --currecy_capital="500" --use_stratagies="trend_ema,profit_stop_rsi,bollinger,macd,sar" --population="101"
+ * 
  *
  * any parameters for sim and or strategy can be passed in and will override the genetic test generated parameter
  * i.e. if --period_length=1m is passed all test will be performed using --period_length=1m instead of trying to find that parameter

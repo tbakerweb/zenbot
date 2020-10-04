@@ -9,8 +9,8 @@ $Options = @{
     Exchanges  = [PSCustomObject]@{}
 }
 
-$ZenbotPath = "C:\Src\toastedCoder\zenbot"
 ## Set Important Paths
+$ZenbotPath = "C:\Src\toastedCoder\zenbot"
 $ExchangesPath = "C:\Src\toastedCoder\zenbot\extensions\exchanges"
 $StratagiesPath = "C:\Src\toastedCoder\zenbot\extensions\strategies"
 
@@ -48,7 +48,7 @@ $Options.Exchanges.binanceus | ForEach-Object {
     
     # Construct an bot backfill
     $selector = $_
-    node ./zenbot.js sim $selector --conf=tbw-sim.json --days 14 --asset_capital=500 --silent
+    node ./zenbot.js sim $selector --conf tbw-sim.json --days 14 --asset_capital 500 --silent
 
 }
 
@@ -63,18 +63,20 @@ While (-Not $Complete) {
     # $RunningJobs = Get-RSJob | Where-Object { $_.State -eq 'Running' }
     # $Jobs = Get-RSJob | Where-Object {$_.State -eq 'Running'}
 
-    ## Display Completed Jobs
-    # Write-Host 'Getting Completd Jobs' -ForegroundColor Green
-    Get-RSJob | Where-Object { $_.State -eq 'Completed' } | Remove-RSJob
-    
-    
     # ## Running Jobs
     # Write-Host 'Getting Running Jobs' -ForegroundColor Yellow
     # Get-RSJob | Where-Object { $_.State -eq 'Running' } | Receive-RSJob
 
     ## Display Remaining Jobs
     Write-Host ("Remaining Jobs:" + $BotJobs.Count) -ForegroundColor Green
-    Get-RSJob
+    Get-RSJob | Receive-RSJob -ErrorAction SilentlyContinue
+
+    ## Remove Completed Jobs
+    # Write-Host 'Getting Completd Jobs' -ForegroundColor Green
+    Get-RSJob | Where-Object { $_.State -eq 'Completed' } | Remove-RSJob
+    
+    
+
 
     ## Complete or Sleep
     if ($BotJobs.Count -eq 0) {

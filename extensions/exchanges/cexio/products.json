@@ -630,5 +630,253 @@
     "max_size": null,
     "increment": "0.01",
     "label": "MATIC/GBP"
+  },
+  {
+    "asset": "MATIC",
+    "currency": "USDT",
+    "min_size": "250",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "MATIC/USDT"
+  },
+  {
+    "asset": "LINK",
+    "currency": "USD",
+    "min_size": "0.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LINK/USD"
+  },
+  {
+    "asset": "LINK",
+    "currency": "EUR",
+    "min_size": "0.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LINK/EUR"
+  },
+  {
+    "asset": "LINK",
+    "currency": "GBP",
+    "min_size": "0.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LINK/GBP"
+  },
+  {
+    "asset": "ZRX",
+    "currency": "USD",
+    "min_size": "15",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "ZRX/USD"
+  },
+  {
+    "asset": "ZRX",
+    "currency": "USDT",
+    "min_size": "15",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "ZRX/USDT"
+  },
+  {
+    "asset": "GNT",
+    "currency": "USD",
+    "min_size": "70",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "GNT/USD"
+  },
+  {
+    "asset": "GNT",
+    "currency": "USDT",
+    "min_size": "70",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "GNT/USDT"
+  },
+  {
+    "asset": "LAMB",
+    "currency": "USD",
+    "min_size": "300",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LAMB/USD"
+  },
+  {
+    "asset": "LAMB",
+    "currency": "USDT",
+    "min_size": "300",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LAMB/USDT"
+  },
+  {
+    "asset": "HOT",
+    "currency": "USD",
+    "min_size": "10000",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "HOT/USD"
+  },
+  {
+    "asset": "HOT",
+    "currency": "USDT",
+    "min_size": "10000",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "HOT/USDT"
+  },
+  {
+    "asset": "DASH",
+    "currency": "USDT",
+    "min_size": "0.08",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "DASH/USDT"
+  },
+  {
+    "asset": "NEO",
+    "currency": "USDT",
+    "min_size": "0.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "NEO/USDT"
+  },
+  {
+    "asset": "GAS",
+    "currency": "USDT",
+    "min_size": "4",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "GAS/USDT"
+  },
+  {
+    "asset": "BAT",
+    "currency": "USDT",
+    "min_size": "20",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "BAT/USDT"
+  },
+  {
+    "asset": "ATOM",
+    "currency": "USDT",
+    "min_size": "1.2",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "ATOM/USDT"
+  },
+  {
+    "asset": "XTZ",
+    "currency": "USDT",
+    "min_size": "2",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "XTZ/USDT"
+  },
+  {
+    "asset": "GUSD",
+    "currency": "USDT",
+    "min_size": "8",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "GUSD/USDT"
+  },
+  {
+    "asset": "USDC",
+    "currency": "USDT",
+    "min_size": "7",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "USDC/USDT"
+  },
+  {
+    "asset": "WABI",
+    "currency": "USDT",
+    "min_size": "50",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "WABI/USDT"
+  },
+  {
+    "asset": "LINK",
+    "currency": "USDT",
+    "min_size": "0.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "LINK/USDT"
+  },
+  {
+    "asset": "DOT",
+    "currency": "USD",
+    "min_size": "1.1",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "DOT/USD"
+  },
+  {
+    "asset": "DOT",
+    "currency": "USDT",
+    "min_size": "1.1",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "DOT/USDT"
+  },
+  {
+    "asset": "COMP",
+    "currency": "USD",
+    "min_size": "0.04",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "COMP/USD"
+  },
+  {
+    "asset": "COMP",
+    "currency": "USDT",
+    "min_size": "0.04",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "COMP/USDT"
+  },
+  {
+    "asset": "ZIL",
+    "currency": "USD",
+    "min_size": "350",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "ZIL/USD"
+  },
+  {
+    "asset": "ZIL",
+    "currency": "USDT",
+    "min_size": "350",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "ZIL/USDT"
+  },
+  {
+    "asset": "UNI",
+    "currency": "USD",
+    "min_size": "1.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "UNI/USD"
+  },
+  {
+    "asset": "UNI",
+    "currency": "USDT",
+    "min_size": "1.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "UNI/USDT"
+  },
+  {
+    "asset": "UNI",
+    "currency": "ETH",
+    "min_size": "1.5",
+    "max_size": null,
+    "increment": "0.01",
+    "label": "UNI/ETH"
   }
 ]
