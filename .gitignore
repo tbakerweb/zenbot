@@ -39,6 +39,7 @@ gen.*.bat
 gen.*.sh
 .env
 scripts/auto_backtester/backtesting_*.csv
+scripts/genetic_backtester/simulations/*
 database/*
 .vscode/
 *tbw*
