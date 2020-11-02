@@ -1,5 +1,77 @@
 [
   {
+    "asset": "AAVE",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Aave/Bitcoin"
+  },
+  {
+    "asset": "AAVE",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Aave/Tether USD"
+  },
+  {
+    "asset": "ADEL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Akropolis Delphi/Tether USD"
+  },
+  {
+    "asset": "AKRO",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Akropolis/Bitcoin"
+  },
+  {
+    "asset": "AKRO",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Akropolis/Tether USD"
+  },
+  {
+    "asset": "AMP",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Amp/Bitcoin"
+  },
+  {
+    "asset": "AMP",
+    "currency": "TRX",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Amp/Tron"
+  },
+  {
+    "asset": "AMP",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Amp/Tether USD"
+  },
+  {
+    "asset": "ANK",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "AlphaLink/Tether USD"
+  },
+  {
     "asset": "ARDR",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -56,6 +128,22 @@
     "label": "Basic Attention Token/Tether USD"
   },
   {
+    "asset": "BCHA",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bitcoin Cash ABC PF/Bitcoin"
+  },
+  {
+    "asset": "BCHA",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bitcoin Cash ABC PF/Tether USD"
+  },
+  {
     "asset": "BCHABC",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -78,6 +166,46 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Bitcoin Cash/Tether USD"
+  },
+  {
+    "asset": "BCHBEAR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Short Bitcoin Cash Token/Tether USD"
+  },
+  {
+    "asset": "BCHBULL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Long Bitcoin Cash Token/Tether USD"
+  },
+  {
+    "asset": "BCHC",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "BitCherry/Tether USD"
+  },
+  {
+    "asset": "BCHN",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bitcoin Cash Node PF/Bitcoin"
+  },
+  {
+    "asset": "BCHN",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bitcoin Cash Node PF/Tether USD"
   },
   {
     "asset": "BCHSV",
@@ -118,6 +246,54 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "3X Short Bitcoin Token/Tether USD"
+  },
+  {
+    "asset": "BID",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bidao/Bitcoin"
+  },
+  {
+    "asset": "BID",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Bidao/Tether USD"
+  },
+  {
+    "asset": "BLY",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Blocery/Tether USD"
+  },
+  {
+    "asset": "BNB",
+    "currency": "BUSD",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Binance Coin/Binance USD"
+  },
+  {
+    "asset": "BNB",
+    "currency": "TRX",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Binance Coin/Tron"
+  },
+  {
+    "asset": "BNB",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Binance Coin/Tether USD"
   },
   {
     "asset": "BNT",
@@ -230,6 +406,38 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Civic/Bitcoin"
+  },
+  {
+    "asset": "CVP",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "PowerPool Concentrated Vot Power/Tether USD"
+  },
+  {
+    "asset": "CVT",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "CyberVeinToken/Bitcoin"
+  },
+  {
+    "asset": "CVT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "CyberVeinToken/Tether USD"
+  },
+  {
+    "asset": "DAI",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Dai Stablecoin/Tether USD"
   },
   {
     "asset": "DASH",
@@ -512,6 +720,22 @@
     "label": "Inverse Bitcoin Volatility Token/Tether USD"
   },
   {
+    "asset": "INJ",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Injective Protocol/Bitcoin"
+  },
+  {
+    "asset": "INJ",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Injective Protocol/Tether USD"
+  },
+  {
     "asset": "JFI",
     "currency": "USDT",
     "min_total": "1",
@@ -550,22 +774,6 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Darwinia Commitment Token/Tether USD"
-  },
-  {
-    "asset": "LEND",
-    "currency": "BTC",
-    "min_total": "0.0001",
-    "max_size": null,
-    "increment": "0.00000001",
-    "label": "Aave/Bitcoin"
-  },
-  {
-    "asset": "LEND",
-    "currency": "USDT",
-    "min_total": "1",
-    "max_size": null,
-    "increment": "0.00000001",
-    "label": "Aave/Tether USD"
   },
   {
     "asset": "LINK",
