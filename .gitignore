@@ -23,7 +23,8 @@ paper_result*
 *_test
 backtesting_*
 generation_data_*
-simulations/*
+simula
+tions/*
 models/**/*.json
 models/**/*.html
 *.pyc
@@ -44,3 +45,6 @@ database/*
 .vscode/
 *tbw*
 /Binance*.html
+/simulation*
+GeneSimResult*
+/_*

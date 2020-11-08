@@ -2,11 +2,12 @@
 ## Parameter Bindings
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory = $true)][ValidateSet('Backfill', 'Sim', 'StratagySim', 'Trade', 'Monitor')][String]$Mode,
+    [Parameter(Mandatory = $true)][ValidateSet('Backfill', 'Sim', 'StratagySim', 'Trade', 'Monitor', 'GeneTesting')][String]$Mode,
     [Parameter()][Switch]$Monitor,
     [Parameter()][Int]$Days = 14,
     [Parameter()][String]$Exchange,
     [Parameter()][String]$TradeConfigs,
+    [Parameter()][String]$GeneStratagy,
     [Parameter()][String]$ZenbotPath = "C:\Src\toastedCoder\zenbot",
     [Parameter()][String]$Throttle = 6
 )
@@ -21,9 +22,10 @@ $Config = [pscustomObject] @{
     
     ## Exchange and Product Selections
     Exchange        = if ($Exchange) { $Exchange } else { 'binanceus' }
-    DefaultSelector = 'binanceus.ONE-USD'
-    
+    DefaultSelector = 'binanceus.BTC-USD'
     BaseConfig      = 'tbw-sim.json'
+    
+    ## Trading Configuration
     TradeConfigs    = if ($TradeConfigs) { $TradeConfigs } else { @(
             'tbw-local-binanceus-trend_ema-BTC.json',
             'tbw-local-binanceus-trend_ema-ETH.json',
@@ -34,10 +36,28 @@ $Config = [pscustomObject] @{
             'tbw-local-binanceus-trend_ema-ZEC.json'
         )
     }
+    
+    ## MOVED to Start-GeneticSimulations.ps1
+    ## Genetic Backtest Configs
+    # GeneTesting     = [pscustomObject]@{
+    #     <#
+    #     # Stratagies
+    #         'all' 
+    #         'bollinger'
+    #         'macd'
+    #         'trend_bollinger'
+    #         'trend_ema'
+    #         'speed'
+    #     #>
+    #     Stratagy        = 'speed'
+    #     PopulationSize  = 10
+    #     Generations     = 2
+    #     CurrencyCapital = 500
+    #     PopulationName  = '2020-11-04-tbw-testing'
+    # }
 
-    
-    
-    ## Backfill and Sim options
+
+    ## Backfill and Sim, Gene Testing Options
     Days            = $Days
 
     ## Runspace Options
@@ -119,7 +139,7 @@ if ($Mode -eq 'Sim') {
     ## For Each Exchange Pair
     $JobNamePrefix = 'S-' + $Config.Exchange + '-'
     $ExchangePairs | ForEach-Object -Process {
-    # $ExchangePairs | Start-RSJob -Name { $JobNamePrefix + $_ } -ArgumentList $Config -Throttle $Throttle -ScriptBlock {
+        # $ExchangePairs | Start-RSJob -Name { $JobNamePrefix + $_ } -ArgumentList $Config -Throttle $Throttle -ScriptBlock {
         # param ($Config)
         
         #Set the Location
@@ -139,8 +159,8 @@ if ($Mode -eq 'Sim') {
         
         ## Set File Paths
         $FolderPath = Join-Path $Config.ZenbotPath 'simulations' $Config.Timestamp
-        $Filename = $Selector + '.html'
-        $FilePath = Join-Path $FolderPath $Filename
+        # $Filename = $Selector + '.html'
+        # $FilePath = Join-Path $FolderPath $Filename
 
         Test-FolderPath -FolderPath $FolderPath
         
@@ -211,6 +231,25 @@ if ($Mode -eq 'Trade') {
         # return $TradeOutput
     } | Out-Null
 }
+
+##
+## MOVED to Start-GeneticSimulations.ps1
+##
+# ## Genetic Testing
+# if ($Mode -eq 'GeneTesting') {
+    
+#     ## Set Folder Path
+#     Set-Location $Config.ZenbotPath
+
+#     ## Notify Selector Backfill starting
+#     Write-Host 'Starting Genetic Testing for for:'$Config.GeneTesting.Stratagy -NoNewline
+    
+#     ## Run the Trade Bot
+#     $PopulationName = $Config.GeneTesting.Stratagy + '-' + $Config.GeneTesting.PopulationName
+#     $Filename = 'GeneSimResult-' + $Config.GeneTesting.Stratagy + '-' + $Config.DefaultSelector + '-' + (Get-Date -Format FileDateTimeUniversal) + '.html'
+#     node ./scripts/genetic_backtester/darwin.js --use_strategies $Config.GeneTesting.Stratagy --selector $Config.DefaultSelector --population $Config.GeneTesting.PopulationSize --population_data $PopulationName --days $Config.Days --runGenerations $Config.GeneTesting.Generations --currency_capital $Config.GeneTesting.CurrencyCapital --maxCores $Config.Throttle --generateLaunch true --filename $Filename
+#     # node ./scripts/genetic_backtester/darwin.js --use_strategies ($Config.GeneTesting.Stratagies -join ',') --selector $Config.DefaultSelector --population $Config.GeneTesting.PopulationSize --population_data $Config.GeneTesting.PopulationName --days $Config.Days --runGenerations $Config.GeneTesting.Generations --currency_capital $Config.GeneTesting.CurrencyCapital --maxCores $Config.Throttle --generateLaunch true --filename $Filename
+# }
 
 ## Monitor the Runspaces
 if ($Monitor -or ($Config.Mode = 'Monitor')) {
