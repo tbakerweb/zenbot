@@ -1376,15 +1376,7 @@
     "label": "NXT/Tether USD"
   },
   {
-    "asset": "OMG",
-    "currency": "BTC",
-    "min_total": "0.0001",
-    "max_size": null,
-    "increment": "0.00000001",
-    "label": "OmiseGO/Bitcoin"
-  },
-  {
-    "asset": "PAX",
+    "asset": "SUN",
     "currency": "USDT",
     "min_total": "1",
     "max_size": null,
@@ -1526,22 +1518,6 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Stellar/USD Coin"
-  },
-  {
-    "asset": "STR",
-    "currency": "USDT",
-    "min_total": "1",
-    "max_size": null,
-    "increment": "0.00000001",
-    "label": "Stellar/Tether USD"
-  },
-  {
-    "asset": "STRAT",
-    "currency": "BTC",
-    "min_total": "0.0001",
-    "max_size": null,
-    "increment": "0.00000001",
-    "label": "Stratis/Bitcoin"
   },
   {
     "asset": "TRX",

@@ -1200,14 +1200,6 @@
     "label": "IQX/USD"
   },
   {
-    "asset": "IQX",
-    "currency": "EOS",
-    "min_size": "986.0",
-    "max_size": "100000000.0",
-    "increment": "0.0000000001",
-    "label": "IQX/EOS"
-  },
-  {
     "asset": "WPR",
     "currency": "USD",
     "min_size": "258.0",
@@ -2590,6 +2582,46 @@
     "max_size": "1000000.0",
     "increment": "0.000001",
     "label": "JST/UST"
+  },
+  {
+    "asset": "IQX",
+    "currency": "UST",
+    "min_size": "0.001",
+    "max_size": "2000.0",
+    "increment": "0.000001",
+    "label": "IQX/UST"
+  },
+  {
+    "asset": "CST",
+    "currency": "BCH",
+    "min_size": "0.001",
+    "max_size": "1000.0",
+    "increment": "0.000001",
+    "label": "CST/BCH"
+  },
+  {
+    "asset": "CST",
+    "currency": "BCH",
+    "min_size": "0.001",
+    "max_size": "1000.0",
+    "increment": "0.000001",
+    "label": "CST/BCH"
+  },
+  {
+    "asset": "HEZ",
+    "currency": "USD",
+    "min_size": "0.001",
+    "max_size": "10000.0",
+    "increment": "0.001",
+    "label": "HEZ/USD"
+  },
+  {
+    "asset": "HEZ",
+    "currency": "UST",
+    "min_size": "0.001",
+    "max_size": "10000.0",
+    "increment": "0.000001",
+    "label": "HEZ/UST"
   },
   {
     "asset": "BTC",

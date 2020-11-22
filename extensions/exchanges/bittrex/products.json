@@ -112,6 +112,14 @@
     "label": "BTC/NLG"
   },
   {
+    "asset": "XWC",
+    "currency": "BTC",
+    "min_size": "10.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "BTC/XWC"
+  },
+  {
     "asset": "MONA",
     "currency": "BTC",
     "min_size": "1.57748612",
@@ -1240,22 +1248,6 @@
     "label": "USDT/XVG"
   },
   {
-    "asset": "UKG",
-    "currency": "BTC",
-    "min_size": "84.74576271",
-    "max_size": "1000000",
-    "increment": "0.00000001",
-    "label": "BTC/UKG"
-  },
-  {
-    "asset": "UKG",
-    "currency": "ETH",
-    "min_size": "32.89473684",
-    "max_size": "1000000",
-    "increment": "0.00000001",
-    "label": "ETH/UKG"
-  },
-  {
     "asset": "IGNIS",
     "currency": "BTC",
     "min_size": "82.78145695",
@@ -1442,7 +1434,7 @@
   {
     "asset": "BTC",
     "currency": "USD",
-    "min_size": "0.00025427",
+    "min_size": "0.00018634",
     "max_size": "1000000",
     "increment": "0.00000001",
     "label": "USD/BTC"
@@ -2432,12 +2424,12 @@
     "label": "USDT/EOS"
   },
   {
-    "asset": "FXC",
+    "asset": "AMP",
     "currency": "BTC",
     "min_size": "806.45161290",
     "max_size": "1000000",
     "increment": "0.00000001",
-    "label": "BTC/FXC"
+    "label": "BTC/AMP"
   },
   {
     "asset": "DUSK",
@@ -4598,5 +4590,69 @@
     "max_size": "1000000",
     "increment": "0.00000001",
     "label": "USDT/KAI"
+  },
+  {
+    "asset": "XWC",
+    "currency": "USDT",
+    "min_size": "10.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "USDT/XWC"
+  },
+  {
+    "asset": "GLEEC",
+    "currency": "BTC",
+    "min_size": "3.40000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "BTC/GLEEC"
+  },
+  {
+    "asset": "AKN",
+    "currency": "BTC",
+    "min_size": "20.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "BTC/AKN"
+  },
+  {
+    "asset": "AKN",
+    "currency": "USDT",
+    "min_size": "20.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "USDT/AKN"
+  },
+  {
+    "asset": "NVT",
+    "currency": "BTC",
+    "min_size": "22.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "BTC/NVT"
+  },
+  {
+    "asset": "NVT",
+    "currency": "USDT",
+    "min_size": "22.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "USDT/NVT"
+  },
+  {
+    "asset": "LCS",
+    "currency": "BTC",
+    "min_size": "16.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "BTC/LCS"
+  },
+  {
+    "asset": "LCS",
+    "currency": "USDT",
+    "min_size": "16.00000000",
+    "max_size": "1000000",
+    "increment": "0.00000001",
+    "label": "USDT/LCS"
   }
 ]
