@@ -63,6 +63,34 @@
     "label": "ALGO/XBT"
   },
   {
+    "asset": "ANT",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "ANT/ETH"
+  },
+  {
+    "asset": "ANT",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "ANT/EUR"
+  },
+  {
+    "asset": "ANT",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "ANT/USD"
+  },
+  {
+    "asset": "ANT",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "ANT/XBT"
+  },
+  {
     "asset": "ATOM",
     "currency": "XETH",
     "min_size": "0.01",
@@ -406,6 +434,118 @@
     "label": "ICX/XBT"
   },
   {
+    "asset": "KAVA",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KAVA/ETH"
+  },
+  {
+    "asset": "KAVA",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KAVA/EUR"
+  },
+  {
+    "asset": "KAVA",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KAVA/USD"
+  },
+  {
+    "asset": "KAVA",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KAVA/XBT"
+  },
+  {
+    "asset": "KEEP",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KEEP/ETH"
+  },
+  {
+    "asset": "KEEP",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KEEP/EUR"
+  },
+  {
+    "asset": "KEEP",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KEEP/USD"
+  },
+  {
+    "asset": "KEEP",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KEEP/XBT"
+  },
+  {
+    "asset": "KNC",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KNC/ETH"
+  },
+  {
+    "asset": "KNC",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KNC/EUR"
+  },
+  {
+    "asset": "KNC",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KNC/USD"
+  },
+  {
+    "asset": "KNC",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KNC/XBT"
+  },
+  {
+    "asset": "KSM",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KSM/ETH"
+  },
+  {
+    "asset": "KSM",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KSM/EUR"
+  },
+  {
+    "asset": "KSM",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KSM/USD"
+  },
+  {
+    "asset": "KSM",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "KSM/XBT"
+  },
+  {
     "asset": "LINK",
     "currency": "XETH",
     "min_size": "0.01",
@@ -607,6 +747,90 @@
     "min_size": "0.01",
     "increment": "0.01",
     "label": "SC/XBT"
+  },
+  {
+    "asset": "SNX",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "SNX/ETH"
+  },
+  {
+    "asset": "SNX",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "SNX/EUR"
+  },
+  {
+    "asset": "SNX",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "SNX/USD"
+  },
+  {
+    "asset": "SNX",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "SNX/XBT"
+  },
+  {
+    "asset": "STORJ",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "STORJ/ETH"
+  },
+  {
+    "asset": "STORJ",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "STORJ/EUR"
+  },
+  {
+    "asset": "STORJ",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "STORJ/USD"
+  },
+  {
+    "asset": "STORJ",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "STORJ/XBT"
+  },
+  {
+    "asset": "TBTC",
+    "currency": "XETH",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "TBTC/ETH"
+  },
+  {
+    "asset": "TBTC",
+    "currency": "ZEUR",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "TBTC/EUR"
+  },
+  {
+    "asset": "TBTC",
+    "currency": "ZUSD",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "TBTC/USD"
+  },
+  {
+    "asset": "TBTC",
+    "currency": "XXBT",
+    "min_size": "0.01",
+    "increment": "0.01",
+    "label": "TBTC/XBT"
   },
   {
     "asset": "TRX",
