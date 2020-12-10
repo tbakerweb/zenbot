@@ -13110,5 +13110,192 @@
     "increment": "0.01000000",
     "asset_increment": "0.01000000",
     "label": "XRP/NGN"
+  },
+  {
+    "id": "SKLBTC",
+    "asset": "SKL",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "SKL/BTC"
+  },
+  {
+    "id": "SKLBUSD",
+    "asset": "SKL",
+    "currency": "BUSD",
+    "min_size": "0.10000000",
+    "max_size": "9000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00001000",
+    "asset_increment": "0.10000000",
+    "label": "SKL/BUSD"
+  },
+  {
+    "id": "SKLUSDT",
+    "asset": "SKL",
+    "currency": "USDT",
+    "min_size": "0.10000000",
+    "max_size": "9000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00001000",
+    "asset_increment": "0.10000000",
+    "label": "SKL/USDT"
+  },
+  {
+    "id": "BCHEUR",
+    "asset": "BCH",
+    "currency": "EUR",
+    "min_size": "0.00001000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.01000000",
+    "asset_increment": "0.00001000",
+    "label": "BCH/EUR"
+  },
+  {
+    "id": "YFIEUR",
+    "asset": "YFI",
+    "currency": "EUR",
+    "min_size": "0.00000100",
+    "max_size": "9000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.01000000",
+    "asset_increment": "0.00000100",
+    "label": "YFI/EUR"
+  },
+  {
+    "id": "ZILBIDR",
+    "asset": "ZIL",
+    "currency": "BIDR",
+    "min_size": "1.00000000",
+    "max_size": "100000000.00000000",
+    "min_total": "20000.00",
+    "increment": "0.01",
+    "asset_increment": "1.00000000",
+    "label": "ZIL/BIDR"
+  },
+  {
+    "id": "SUSDBTC",
+    "asset": "SUSD",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "SUSD/BTC"
+  },
+  {
+    "id": "SUSDETH",
+    "asset": "SUSD",
+    "currency": "ETH",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.01000000",
+    "increment": "0.00000010",
+    "asset_increment": "1.00000000",
+    "label": "SUSD/ETH"
+  },
+  {
+    "id": "SUSDUSDT",
+    "asset": "SUSD",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "SUSD/USDT"
+  },
+  {
+    "id": "COVERETH",
+    "asset": "COVER",
+    "currency": "ETH",
+    "min_size": "0.00010000",
+    "max_size": "100000.00000000",
+    "min_total": "0.01000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.00010000",
+    "label": "COVER/ETH"
+  },
+  {
+    "id": "COVERBUSD",
+    "asset": "COVER",
+    "currency": "BUSD",
+    "min_size": "0.00001000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.01000000",
+    "asset_increment": "0.00001000",
+    "label": "COVER/BUSD"
+  },
+  {
+    "id": "GHSTETH",
+    "asset": "GHST",
+    "currency": "ETH",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.01000000",
+    "increment": "0.00000010",
+    "asset_increment": "1.00000000",
+    "label": "GHST/ETH"
+  },
+  {
+    "id": "GHSTBUSD",
+    "asset": "GHST",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "GHST/BUSD"
+  },
+  {
+    "id": "SUSHIUPUSDT",
+    "asset": "SUSHIUP",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "SUSHIUP/USDT"
+  },
+  {
+    "id": "SUSHIDOWNUSDT",
+    "asset": "SUSHIDOWN",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "SUSHIDOWN/USDT"
+  },
+  {
+    "id": "XLMUPUSDT",
+    "asset": "XLMUP",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "XLMUP/USDT"
+  },
+  {
+    "id": "XLMDOWNUSDT",
+    "asset": "XLMDOWN",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "10000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.01000000",
+    "label": "XLMDOWN/USDT"
   }
 ]

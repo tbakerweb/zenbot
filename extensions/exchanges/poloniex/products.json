@@ -64,6 +64,14 @@
     "label": "Amp/Tether USD"
   },
   {
+    "asset": "API3",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "API3/Tether USD"
+  },
+  {
     "asset": "ARDR",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -118,6 +126,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Travala.com Token/Tether USD"
+  },
+  {
+    "asset": "BADGER",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Badger DAO/Tether USD"
   },
   {
     "asset": "BAL",
@@ -472,6 +488,14 @@
     "label": "Corn/Tether USD"
   },
   {
+    "asset": "COVER",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Cover Protocol/Tether USD"
+  },
+  {
     "asset": "CREAM",
     "currency": "USDT",
     "min_total": "1",
@@ -590,6 +614,22 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Dogecoin/Tether USD"
+  },
+  {
+    "asset": "DOS",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "DOS Network/Tether USD"
+  },
+  {
+    "asset": "DOT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Polkadot Token/Tether USD"
   },
   {
     "asset": "EOS",
@@ -752,7 +792,31 @@
     "label": "Foam/Bitcoin"
   },
   {
-    "asset": "GAS",
+    "asset": "FRONT",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Frontier/Bitcoin"
+  },
+  {
+    "asset": "FRONT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Frontier/Tether USD"
+  },
+  {
+    "asset": "FSW",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "FalconSwap/Tether USD"
+  },
+  {
+    "asset": "FUND",
     "currency": "BTC",
     "min_total": "0.0001",
     "max_size": null,
@@ -798,6 +862,22 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Aavegotchi/Tether USD"
+  },
+  {
+    "asset": "GLM",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Golem Network Token/Bitcoin"
+  },
+  {
+    "asset": "GLM",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Golem Network Token/Tether USD"
   },
   {
     "asset": "HEGIC",
@@ -1150,6 +1230,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Numeraire/Bitcoin"
+  },
+  {
+    "asset": "NU",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "NuCypher/Tether USD"
   },
   {
     "asset": "NXT",
