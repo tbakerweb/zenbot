@@ -4,16 +4,16 @@
 param (
     [Parameter()][String]$Exchange = 'binanceus',
     [Parameter()][String]$TradePair = 'BTC-USD',
-    [Parameter()][String]$Stratagy = 'trend_ema',
+    [Parameter()][String]$Stratagy = 'multi',
     [Parameter()][Int]$Days = 14,
-    [Parameter()][Int]$Generations = 5,
-    [Parameter()][Int]$PopulationSize = 20,
+    [Parameter()][Int]$Generations = 3,
+    [Parameter()][Int]$PopulationSize = 50,
     [Parameter()][Array]$Exchanges,
     [Parameter()][Array]$TradePairs,
     [Parameter()][Array]$Stratagies,
     [Parameter()][Int]$MaxCores = 6,
     [Parameter()][Int]$CurrencyCapital = 500,
-    [Parameter()][String]$PopulationName = 'tbw',
+    [Parameter()][String]$PopulationName = 'tbw-multi',
     [Parameter()][Switch]$AllSelectors,
     [Parameter()][Switch]$AllStratagies
 )
