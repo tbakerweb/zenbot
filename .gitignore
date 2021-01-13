@@ -41,7 +41,7 @@ scripts/auto_backtester/backtesting_*.csv
 scripts/genetic_backtester/simulations/*
 database/*
 .vscode/
-*tbw*
+*tbw*.*
 /Binance*.html
 /simulation*
 GeneSimResult*

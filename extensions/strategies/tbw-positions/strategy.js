@@ -13,6 +13,7 @@ var n = require('numbro')
 var strategy_session_id = crypto.randomBytes(4).toString('hex')
 
 const mongoose = require('mongoose');
+// const { null } = require('mathjs')
 // const { Schema, Model } = mongoose
 // const { string } = require('mathjs')
 mongoose.connect('mongodb://192.168.1.99:27017/zenbot4', { useNewUrlParser: true });
@@ -56,6 +57,7 @@ const positionSchema = new mongoose.Schema({
     price: String,
     size: String,
     usd: String,
+    usd_plus_fee: String,
     fee: String,
     slippage: String
   },
@@ -189,6 +191,8 @@ module.exports = {
     macd.calculate(s)
     ehlers_ft.calculate(s)
     momentum.calculate(s)
+    s.signal = null// TODO TODO TODO - This disables critical functionality I need to integrate here.  The current issue is that the ontrade (not on period) is where some of the trade signals come from.  This means that the code I've built into the onPeriod doesn't run here. 
+    // I'm debugging the buy/sell signal over rides that positions require.  Don't allow the calculate to do anything but keep data fresh.
   },
 
   // THIS WORKS but not asynchronously
@@ -306,38 +310,45 @@ module.exports = {
     // Use an analysis of the current open positions to determine what to do
     // 
 
-    // First, test to see if the current trade prices satisfy any open positions:
-    // Clear the sell signal and only set it if it should
-    // s.signal = null
-
-    // Prepare to match any overlaps in Position Size
-
     // Determine if a Position is ready to sell.
-    // if (s.signal == 'sell') {
+    if (s.signal == 'sell') {
 
-    // A Sell signal tells us it's a good time to sell, but make sure it's selling a profitable position
-    // s.signal = null
+      // A Sell signal tells us it's a good time to sell, but make sure it's selling a profitable position
 
 
-    // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
-    if (s.strategy.positions.length > 0) {
 
-      // Get the lowest open position by target price
-      var lowestPositionTargetPrice = 99999999
-      s.strategy.positions.forEach(position => {
-        positionSellTarget = n(position._doc.target.price)
-        if (positionSellTarget < lowestPositionTargetPrice) {
-          lowestPositionTargetPrice = positionSellTarget
+      // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
+      if (s.strategy.positions.length > 0) {
+
+        // Get the lowest open position by target price
+        var period_close = n(s.lookback[0].close).value();
+        var period_high = n(s.lookback[0].high).value();
+
+        // Calculate the lowest Position Target Price
+        var lowestPositionTargetPrice = n(999999).value();
+
+        s.strategy.positions.forEach(position => {
+          var positionSellTarget = n(position._doc.target.price).value()
+          if (positionSellTarget < lowestPositionTargetPrice) {
+            lowestPositionTargetPrice = positionSellTarget
+          }
+        });
+
+        // If the lowest Target Price of the open positions is above the Ask, mark as sell
+        if (lowestPositionTargetPrice < period_high) {
+          // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
+          s.signal = 'sell'
+        } else {
+          // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
+          s.signal = null
         }
-      });
 
-      // If the lowest Target Price of the open positions is above the Ask, mark as sell
-      if (lowestPositionTargetPrice < s.quote.ask) {
+      } else {
 
-        s.signal = 'sell'
+        // There are no positions to sell.  Discarding the sell signal
+        // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are Open.')
+        s.signal = null
       }
-
-      // }
     }
 
 
@@ -349,7 +360,9 @@ module.exports = {
       if (s.strategy.positions.length > 0) {
 
         // Determine what a suitable distance between open price amounts should be
-        var priceBufferUnits = n(s.quote.ask).multiply(s.options.position_target_gain_percent / 100 / 2);
+        var period_close = n(s.lookback[0].close).value();
+        var period_high = n(s.lookback[0].high).value();
+        var priceBufferUnits = n(period_close).multiply(s.options.position_target_gain_percent / 100).value();
 
         // Prepare to match any overlaps in Position Size
         var overlap = false
@@ -358,18 +371,21 @@ module.exports = {
         s.strategy.positions.forEach(position => {
 
 
-          var existingBufferLow = n(position._doc.open.price).subtract(priceBufferUnits)
-          var existingBufferHigh = n(position._doc.open.price).add(priceBufferUnits);
+          var existingBufferLow = n(position._doc.open.price).subtract(priceBufferUnits).value();
+          var existingBufferHigh = n(position._doc.open.price).add(priceBufferUnits).value();
 
-          if (s.quote.ask < existingBufferHigh && s.quote.ask > existingBufferLow) {
+          if (period_close > existingBufferLow && period_close < existingBufferHigh) {
             overlap = true
           }
         });
 
         // Test to see if an overlap was found
         if (overlap) {
+          // console.log('Strategy OnPeriod DISCARDING Buy Signal, Position Overlap based on Target Profits')
           s.signal = null
         } else {
+
+          // console.log('Strategy OnPeriod Supports Buy Signal, it does NOT overlap with any of the existing ' + s.strategy.positions.length + ' positions.')
           s.signal = 'buy'
         }
       }
@@ -512,8 +528,8 @@ module.exports = {
 
       var opening_fee_usd = n(my_trade.price) * my_trade.fee
       var position_amount_usd = n(my_trade.size) * n(my_trade.price);
-      // var position_investment_usd = opening_fee_usd + position_amount_usd;
-      var target_close_at_usd = position_amount_usd * target_profit_percent;
+      var position_investment_usd = opening_fee_usd + position_amount_usd;
+      var target_close_at_usd = s.options.position_amount_usd * target_profit_percent;
       var target_close_at_price = n(my_trade.price) * target_profit_percent
 
       // Create a position record
@@ -549,6 +565,7 @@ module.exports = {
           price: my_trade.price,
           size: my_trade.size,
           usd: position_amount_usd,
+          usd_plus_fee: position_investment_usd,
           fee: my_trade.fee,
           slippage: my_trade.slippage,
         },
@@ -570,24 +587,20 @@ module.exports = {
 
         // Add the new position to the positions array
         s.strategy.positions.push(position);
+        cb();
 
         // Log the Position Bought
         // console.log("Bought Position at : " + position.open.price + ", Target Sell: " + position.target.price)
         // Refresh the Open Positions
-        refreshOpenPositions(s, cb).catch(error => console.error(error))
+        // refreshOpenPositions(s, cb).catch(error => console.error(error))
       })
     }
 
     // Close the position
     if (type == 'sell') {
 
-      // Run the Evaluation (Async but wait)
-      closePosition(s, function () {
-
-        // Refresh the Open Positions
-        // refreshOpenPositions(s, cb).catch(error => console.error(error))
-
-      })
+      // Run the Close Position Function
+      closePosition(s, cb);
 
     }
 
