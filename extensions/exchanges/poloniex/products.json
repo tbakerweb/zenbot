@@ -128,6 +128,14 @@
     "label": "Travala.com Token/Tether USD"
   },
   {
+    "asset": "BAC",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Basis Cash/Tether USD"
+  },
+  {
     "asset": "BADGER",
     "currency": "USDT",
     "min_total": "1",
@@ -150,6 +158,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Band Protocol Token/Tether USD"
+  },
+  {
+    "asset": "BAS",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Basis Share/Tether USD"
   },
   {
     "asset": "BAT",
@@ -328,6 +344,14 @@
     "label": "Bancor/Bitcoin"
   },
   {
+    "asset": "BOND",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "BarnBridge/Tether USD"
+  },
+  {
     "asset": "BSVBEAR",
     "currency": "USDT",
     "min_total": "1",
@@ -464,6 +488,14 @@
     "label": "Chromia/Tether USD"
   },
   {
+    "asset": "COMBO",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Furucombo/Tether USD"
+  },
+  {
     "asset": "COMP",
     "currency": "ETH",
     "min_total": "0.0001",
@@ -510,6 +542,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Curve Finance/Tether USD"
+  },
+  {
+    "asset": "CUDOS",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "CudosToken/Tether USD"
   },
   {
     "asset": "CUSDT",
@@ -625,11 +665,19 @@
   },
   {
     "asset": "DOT",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Polkadot/Bitcoin"
+  },
+  {
+    "asset": "DOT",
     "currency": "USDT",
     "min_total": "1",
     "max_size": null,
     "increment": "0.00000001",
-    "label": "Polkadot Token/Tether USD"
+    "label": "Polkadot/Tether USD"
   },
   {
     "asset": "EOS",
@@ -662,6 +710,30 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "EOS/Tether USD"
+  },
+  {
+    "asset": "EOSBEAR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Short EOS Token/Tether USD"
+  },
+  {
+    "asset": "EOSBULL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Long EOS Token/Tether USD"
+  },
+  {
+    "asset": "ESD",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Empty Set Dollar/Tether USD"
   },
   {
     "asset": "ETC",
@@ -766,6 +838,22 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "8X8 Protocol/Tether USD"
+  },
+  {
+    "asset": "FARM",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Harvest Finance/Bitcoin"
+  },
+  {
+    "asset": "FARM",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Harvest Finance/Tether USD"
   },
   {
     "asset": "FCT2",
@@ -878,6 +966,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Golem Network Token/Tether USD"
+  },
+  {
+    "asset": "GRT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "The Graph/Tether USD"
   },
   {
     "asset": "HEGIC",
@@ -1014,6 +1110,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "3X Long Chainlink Token/Tether USD"
+  },
+  {
+    "asset": "LON",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Tokenlon/Tether USD"
   },
   {
     "asset": "LOOM",
@@ -1272,12 +1376,28 @@
     "label": "OmiseGO/Bitcoin"
   },
   {
+    "asset": "ONEINCH",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "1INCH Token/Tether USD"
+  },
+  {
     "asset": "PAX",
     "currency": "USDT",
     "min_total": "1",
     "max_size": null,
     "increment": "0.00000001",
     "label": "Paxos Standard/Tether USD"
+  },
+  {
+    "asset": "PBTC35A",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Poolin pBTC35A/Tether USD"
   },
   {
     "asset": "PEARL",
@@ -1352,6 +1472,14 @@
     "label": "Rarible/Tether USD"
   },
   {
+    "asset": "REEF",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Reef Finance/Tether USD"
+  },
+  {
     "asset": "REN",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -1398,6 +1526,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Darwinia Network Native Token/Tether USD"
+  },
+  {
+    "asset": "ROOK",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "KeeperDAO/Tether USD"
   },
   {
     "asset": "RSR",
@@ -1574,6 +1710,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "NXT/Tether USD"
+  },
+  {
+    "asset": "SUN",
+    "currency": "TRX",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Sun/Tron"
   },
   {
     "asset": "SUN",
@@ -1822,6 +1966,30 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "NEM/Bitcoin"
+  },
+  {
+    "asset": "XFIL",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Filecoin [IOU]/Bitcoin"
+  },
+  {
+    "asset": "XFIL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Filecoin [IOU]/Tether USD"
+  },
+  {
+    "asset": "XFLR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Spark [IOU]/Tether USD"
   },
   {
     "asset": "XMR",

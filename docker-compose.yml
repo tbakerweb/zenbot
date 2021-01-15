@@ -5,11 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/app/
-      - /app/node_modules/
-      - /app/dist/
-     # Avoid syncing database to our server
-      - /app/database/
+      - ./simulations/:/app/simulations/
+      - ./conf.js:/app/conf.js:ro
     restart: always
     tty: true
     ports:
@@ -26,9 +23,6 @@ services:
     volumes:
       - ./database:/data/db
     command: mongod --bind_ip=0.0.0.0 --logpath=/dev/null
-    expose:
-      - 27017
-
   # Remove below comments to use this container. "adminMongo is a Web based user interface (GUI) to handle all your MongoDB connections/databases needs."
   #
   #adminmongo:

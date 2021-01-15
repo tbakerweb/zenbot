@@ -9,11 +9,9 @@ FROM node:10-alpine
 ADD . /app
 WORKDIR /app
 
-COPY --from=builder /usr/local/lib/node_modules/ /usr/local/lib/node_modules/
-COPY --from=builder /app/node_modules /app/node_modules/
-COPY --from=builder /app/dist /app/dist/
-
-RUN ln -s /app/zenbot.sh /usr/local/bin/zenbot
+COPY --chown=node . /app
+COPY --chown=node --from=builder /usr/local/lib/node_modules/ /usr/local/lib/node_modules/
+COPY --chown=node --from=builder /app/node_modules /app/node_modules/
 
 ENV NODE_ENV production
 
