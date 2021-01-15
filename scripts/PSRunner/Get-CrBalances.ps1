@@ -2,19 +2,19 @@
 ## Parameter Bindings
 [CmdletBinding()]
 param (
-    [Parameter()][String]$Exchange = 'binanceus',
-    [Parameter()][String]$TradePair = 'BTC-USD',
+    [Parameter()][String]$Exchange, ##= 'binanceus',
+    [Parameter()][String]$TradePair, ## = 'BTC-USD',
     [Parameter()][String]$Stratagy, ## = 'tbw-positions',
     [Parameter()][Int]$Days = 5,
     [Parameter()][Int]$Generations = 1,
     [Parameter()][Int]$PopulationSize = 5,
-    [Parameter()][Array]$Exchanges = @('gdax','binanceus','hbtc'),
+    [Parameter()][Array]$Exchanges = @('gdax', 'binanceus', 'hbtc'),
     [Parameter()][Array]$TradePairs,
     [Parameter()][Array]$Stratagies,
     [Parameter()][Int]$MaxCores = 2,
     [Parameter()][Int]$CurrencyCapital = 500,
     [Parameter()][String]$PopulationName = 'tbw-positions',
-    [Parameter()][Switch]$AllSelectors,
+    [Parameter()][Switch]$AllTradePairs,
     [Parameter()][Switch]$AllStratagies
 )
 
@@ -56,9 +56,9 @@ ForEach ($ExchangeName in $Exchanges) {
     }
 
     ## 
-    ## Allow an override using -AllSelectors (Make sure to backfill first!)
+    ## Allow an override using -AllTradePairs (Make sure to backfill first!)
     ## 
-    if ($AllSelectors) {
+    if ($AllTradePairs) {
 
         ## Reset TradePairs so it can be filled by the list of exchange products
         $TradePairs = [System.Collections.ArrayList]@()
@@ -78,30 +78,12 @@ ForEach ($ExchangeName in $Exchanges) {
     ## For Each Trading Pair (Creating a Selector)
     ForEach ($TradePairName in $TradePairs) {
     
+        ## Notify Selector Backfill starting
+        Write-Host 'Getting Balance for:'$TradePairName -ForegroundColor Green
+        
         ## Create the 'Normalized' Selector 
         $Selector = $ExchangeName + '.' + $TradePairName
 
-        ## 
-        ## Allow an override using -AllStratagies
-        ## 
-        if ($AllStratagies) {
-            $Stratagies = $StratagyNames 
-        }
-
-
-        ## Start loop for each Stratagy
-        foreach ($StratagyName in $Stratagies) {
-            
-            ## Notify Selector Backfill starting
-            Write-Host 'Starting Genetic Testing for for:'$StratagyName -ForegroundColor Green
-            
-            ## Create a unique Population Name for each test
-            # $UniquePopulationName = $PopulationName + '-' + $StratagyName + '-' + $Timestamp
-            $UniquePopulationName = $PopulationName + '-' + $StratagyName
-
-            ## Run the Genetic Simulation
-            $Filename = 'GeneSimResult-' + $StratagyName + '-' + $Selector + '-' + $Timestamp + '.html'
-            node ./scripts/genetic_backtester/darwin.js --use_strategies $StratagyName --selector $Selector --population $PopulationSize --population_data $UniquePopulationName --days $Days --runGenerations $Generations --currency_capital $CurrencyCapital --maxCores $MaxCores --generateLaunch true --filename $Filename
-        }
+        node ./zenbot.js balance $Selector --debug --conf tbw-local-binanceus-multi-BTC-TEST.js
     }
 }

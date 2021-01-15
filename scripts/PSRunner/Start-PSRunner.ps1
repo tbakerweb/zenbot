@@ -23,7 +23,8 @@ $Config = [pscustomObject] @{
     ## Exchange and Product Selections
     Exchange        = if ($Exchange) { $Exchange } else { 'binanceus' }
     DefaultSelector = 'binanceus.BTC-USD'
-    BaseConfig      = 'tbw-sim.json'
+    # BaseConfig      = 'tbw-sim.json'
+    BaseConfig      = 'tbw-local-binanceus-multi-BTC-TEST.js'
     
     ## Trading Configuration
     TradeConfigs    = if ($TradeConfigs) { $TradeConfigs } else { @(
@@ -199,7 +200,7 @@ if ($Config.Mode -like 'StratagySim') {
         $FilePath = Join-Path $FolderPath $Filename
             
         ## Run the Simulation In Runspace mode
-        node ./zenbot.js sim $Config.DefaultSelector --conf $Config.BaseConfig --stratagy $Stratagy --days $Config.Days --asset_capital 500 --start_capital 500 --filename $FilePath | Tee-Object -Variable StratagySimOutput | Out-Null
+        node ./zenbot.js sim $Config.DefaultSelector --conf $Config.BaseConfig --stratagy $Stratagy --days $Config.Days --asset_capital 0 --start_capital 500 --filename $FilePath | Tee-Object -Variable StratagySimOutput | Out-Null
         return $StratagySimOutput
             
         ## Run the Simulation in Loop Mode
