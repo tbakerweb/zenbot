@@ -37,8 +37,6 @@
   },
   {
     "asset": "ALGO",
-<<<<<<< HEAD
-=======
     "currency": "BTC",
     "min_size": "1",
     "max_size": "260000",
@@ -66,7 +64,6 @@
   },
   {
     "asset": "ALGO",
->>>>>>> unstable
     "currency": "USD",
     "min_size": "1",
     "max_size": "500000",
@@ -570,8 +567,6 @@
     "label": "LOOM/USDC"
   },
   {
-<<<<<<< HEAD
-=======
     "asset": "LRC",
     "currency": "BTC",
     "min_size": "1",
@@ -590,7 +585,6 @@
     "label": "LRC/USD"
   },
   {
->>>>>>> unstable
     "asset": "LTC",
     "currency": "BTC",
     "min_size": "0.1",
@@ -636,8 +630,6 @@
     "label": "MANA/USDC"
   },
   {
-<<<<<<< HEAD
-=======
     "asset": "MKR",
     "currency": "BTC",
     "min_size": "0.001",
@@ -764,7 +756,6 @@
     "label": "OMG/USD"
   },
   {
->>>>>>> unstable
     "asset": "OXT",
     "currency": "USD",
     "min_size": "1",
@@ -990,8 +981,6 @@
     "label": "XTZ/USD"
   },
   {
-<<<<<<< HEAD
-=======
     "asset": "YFI",
     "currency": "BTC",
     "min_size": "0.00001",
@@ -1010,7 +999,6 @@
     "label": "YFI/USD"
   },
   {
->>>>>>> unstable
     "asset": "ZEC",
     "currency": "BTC",
     "min_size": "0.01",
