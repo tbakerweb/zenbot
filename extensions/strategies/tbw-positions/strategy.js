@@ -361,8 +361,8 @@ module.exports = {
         s.strategy.positions.forEach(position => {
 
 
-          var existingBufferLow = n(position._doc.target.price).multiply(0.9).value();
-          var existingBufferHigh = n(position._doc.target.price).multiply(1.1).value();
+          var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
+          var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
 
           if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
             overlap = true
