@@ -89,42 +89,35 @@ const positionSchema = new mongoose.Schema({
 
 // Create a Model Interface to the Collection
 const Position = mongoose.model('Position', positionSchema);
+async function refreshOpenPositions(s, cb) {
 
+  // Find Lowest  Positiions:
+  //  position.status = Open
+  //  position.bot.mode = [sim | live | paper ]
+  //  bot.selector Must match the current exchange/asset
+  //  bot.strategy_session_id Must match the current session if running in Simulation
 
-// async function updateOpenPositions(s, cb) {
+  // Define Query
+  var query = {
+    status: 'open',
+    "bot.mode": s.options.mode,
+    "bot.selector.normalized": s.options.selector.normalized
+  }
 
+  // Sort the Open Positions lowest 
+  var sort = {
+    'target.price': 1
+  }
 
-//   // Find Open Positiions:
-//   //  position.status = Open
-//   //  position.bot.mode = [sim | live | paper ]
-//   //  bot.selector Must match the current exchange/asset
-//   //  bot.session_id Must match the current session if running in Simulation
+  // Only use positions from this Simulation
+  if (s.options.mode == 'sim') {
+    query['bot.session_id'] = strategy_session_id;
+  }
 
-//   // Define Query
-//   var query = {
-//     status: 'open',
-//     "bot.mode": s.options.mode,
-//     "bot.selector.normalized": s.options.selector.normalized
-//   }
-
-//   // Sort the Open Positions lowest 
-//   var sort = {
-//     'target.price': 1
-//   }
-
-//   // Only use positions from this Simulation
-//   if (s.options.mode == 'sim') {
-//     query['bot.session_id'] = strategy_session_id;
-//   }
-
-//   // Query and wait for the openPositions
-//   s.strategy.positions = await Position.find(query).sort(sort).exec();
-//   // const openPositions = await Position.find(query).sort(sort).exec();
-
-//   // Return to the calling execution 
-//   cb();
-// }
-
+  // Query and wait for the openPositions
+  const openPositions = await Position.find(query).sort(sort).exec();
+  cb(openPositions);
+}
 
 
 // Export the Functionality in this Strategy
@@ -195,7 +188,7 @@ module.exports = {
 
     // TODO TODO TODO - This disables critical functionality I need to integrate here.  The current issue is that the ontrade (not on period) is where some of the trade signals come from.  This means that the code I've built into the onPeriod doesn't run here. 
     // I'm debugging the buy/sell signal over rides that positions require.  Don't allow the calculate to do anything but keep data fresh.
-    s.signal = null
+    // s.signal = null
   },
 
   // THIS WORKS but not asynchronously
@@ -211,7 +204,7 @@ module.exports = {
     // console.log(percent_size);
 
     // tbw-positions has a configuration for how much USD to purchase with one position
-    size = n((1 / price) * s.options.position_size_in_usd).multiply(0.99).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
+    size = n((1 / price) * s.options.position_size_in_usd).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
     cb(size)
 
   },
@@ -261,8 +254,8 @@ module.exports = {
       }
 
     } else {
-      size = null
-      s.signal = null;
+      size = 0.00000001
+      // s.signal = null;
     }
 
     // Return the Sell size to quote
@@ -273,6 +266,18 @@ module.exports = {
   // On Period Function - Produces Buy/Sell signals
   onPeriod: function (s, cb) {
 
+
+    refreshOpenPositions(s, function (openPositions) {
+
+      // s.strategy.positions = openPositions
+      s.strategy.positions = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+        if (p._doc.status == 'open') {
+          return p
+        }
+      })
+    });
+
+    // console.log('refreshed positions: ' + s.strategy.positions.length)
 
     // Create Tally variables for Buy/Sell signals
     let totalBuy = 0
@@ -347,8 +352,7 @@ module.exports = {
 
         // Determine what a suitable distance between open price amounts should be
         var period_close = n(s.lookback[0].close).value();
-        var period_high = n(s.lookback[0].high).value();
-        var priceBufferUnits = n(period_close).multiply(s.options.position_target_gain_percent / 100).multiply(2).value();
+        var period_target_price = n(period_close).multiply(1 + (s.options.position_target_gain_percent / 100)).value();
 
         // Prepare to match any overlaps in Position Size
         var overlap = false
@@ -357,10 +361,10 @@ module.exports = {
         s.strategy.positions.forEach(position => {
 
 
-          var existingBufferLow = n(position._doc.open.price).subtract(priceBufferUnits).value();
-          var existingBufferHigh = n(position._doc.open.price).add(priceBufferUnits).value();
+          var existingBufferLow = n(position._doc.target.price).multiply(0.9).value();
+          var existingBufferHigh = n(position._doc.target.price).multiply(1.1).value();
 
-          if (period_close > existingBufferLow && period_close < existingBufferHigh) {
+          if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
             overlap = true
           }
         });
@@ -385,15 +389,13 @@ module.exports = {
     // Determine if a Position is ready to sell.
     if (s.signal == 'sell') {
 
-      // A Sell signal tells us it's a good time to sell, but make sure it's selling a profitable position
-      var calculatedSignal = s.signal
-
       // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
       if (s.strategy.positions.length > 0) {
 
         // Get the lowest open position by target price
-        var period_close = n(s.lookback[0].close).value();
-        var period_high = n(s.lookback[0].high).value();
+        // var period_close = n(s.lookback[0].close).value();
+        var period_low = n(s.lookback[0].low).value();
+        // var period_high = n(s.lookback[0].high).value();
 
         // Calculate the lowest Position Target Price
         var lowestPositionTargetPrice = n(999999).value();
@@ -406,20 +408,19 @@ module.exports = {
         });
 
         // If the lowest Target Price of the open positions is above the Ask, mark as sell
-        if (lowestPositionTargetPrice < period_high) {
+        if (lowestPositionTargetPrice < period_low) {
           // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
           s.signal = 'sell'
         } else {
-          s.signal = calculatedSignal
+          s.signal = null
           // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
 
         }
       }
     }
 
-    // Return to the calling execution 
-    if (s.signal) {
-      // console.log('Signal: ' + s.signal)
+    if(s.signal){
+      // console.log('SIGNAL: ' + s.signal)
     }
     cb();
 
@@ -431,44 +432,7 @@ module.exports = {
     // Get the trade that just executed
     var my_trade = s.my_trades[s.my_trades.length - 1]
 
-    async function refreshOpenPositions(s, cb) {
 
-      // Find Lowest  Positiions:
-      //  position.status = Open
-      //  position.bot.mode = [sim | live | paper ]
-      //  bot.selector Must match the current exchange/asset
-      //  bot.strategy_session_id Must match the current session if running in Simulation
-
-      // Define Query
-      var query = {
-        status: 'open',
-        "bot.mode": s.options.mode,
-        "bot.selector.normalized": s.options.selector.normalized
-      }
-
-      // Sort the Open Positions lowest 
-      var sort = {
-        'target.price': 1
-      }
-
-      // Only use positions from this Simulation
-      if (s.options.mode == 'sim') {
-        query['bot.session_id'] = strategy_session_id;
-      }
-
-      // Query and wait for the openPositions
-      const openPositions = await Position.find(query).sort(sort).exec();
-      s.strategy.positions = openPositions;
-
-      var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-        return p.target.price
-      })
-      console.log('Open Positions[' + s.strategy.positions.length + '] : ' + s.strategy.positions.length)
-      console.log('Current Open Positions Target Prices: ' + targetPositionPrices.join(', '))
-
-      // Return to the calling execution 
-      cb();
-    }
     async function closePosition(s, cb) {
 
       // Find Lowest  Positiions:
@@ -503,7 +467,7 @@ module.exports = {
 
         // Calculate Position Target-Closing Details
         var position_close_usd = n(my_trade.size) * n(my_trade.price);
-        var position_gain_usd = position_close_usd - lowestPosition.open.usd
+        var position_gain_usd = position_close_usd - lowestPosition._doc.open.usd
         // var position_gain_percent = (position_gain_usd / lowestPosition.open.usd) * 100
         var position_time_open = my_trade.time - lowestPosition.open.timestamp
 
@@ -533,22 +497,30 @@ module.exports = {
           if (err) console.log(err);
 
 
-          s.strategy.positions = openPositions
-          // s.strategy.positions = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-          //   if (p._doc.status == 'open') {
-          //     return p
-          //   }
-          // })
-          // var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-          var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-            return p.target.price
-          })
-          
-          console.log('')
-          console.log("SOLD Position at : " + position.closed.price + ", Target Sell: " + position.target.price + ', USD Gain: ' + position.closed.gain_usd)
-          console.log('Current Open [' + s.strategy.positions.length + '] Positions Target Prices: ' + targetPositionPrices.join(', '))
-  
-          cb();
+          refreshOpenPositions(s, function (openPositions) {
+
+            s.strategy.positions = openPositions
+            // s.strategy.positions = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
+            //   if (p._doc.status == 'open') {
+            //     return p
+            //   }
+            // })
+            var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
+              // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+              return p.target.price
+            })
+
+            console.log('')
+            console.log("SOLD Position at: " + position.closed.price + ', Currency Gain: ' + position.closed.gain_usd)
+
+            if (s.strategy.positions.length > 0) {
+              console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
+            } else {
+              console.log('Currently Open [' + s.strategy.positions.length + ']')
+            }
+
+            cb();
+          });
 
         })
       } else {
@@ -621,22 +593,31 @@ module.exports = {
       position.save(function (err, position) {
         if (err) console.log(err);
 
-        // Add the new position to the positions array
-        s.strategy.positions.push(position);
-
-        var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-          return p.target.price
-        })
-
         console.log('')
-        console.log("Bought Position at : " + position.open.price + ", Target Sell: " + position.target.price + ', Size: ' + position.open.size)
-        console.log('Current Open [' + s.strategy.positions.length + '] Positions Proces: ' + targetPositionPrices.join(', '))
+        console.log("Bought Position at: " + position.open.price + ", Target Sell: " + position.target.price)
 
-        cb();
+        refreshOpenPositions(s, function (openPositions) {
 
-        // Log the Position Bought
-        // Refresh the Open Positions
-        // refreshOpenPositions(s, cb).catch(error => console.error(error))
+          // Save th Open Positions from the DB
+          s.strategy.positions = openPositions
+
+          // Sort the Positions to get the lowest price
+          // var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
+          //   // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+          //   return p.target.price
+          // })
+
+          // Log the Open Positions
+          if (s.strategy.positions.length > 0) {
+            console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + s.strategy.positions[0]._doc.target.price)
+            // console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
+          } else {
+            console.log('Currently Open [' + s.strategy.positions.length + ']')
+          }
+
+          // Call Back to the caller
+          cb();
+        });
       })
     }
 

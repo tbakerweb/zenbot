@@ -15,6 +15,7 @@ module.exports = function sim (conf, s) {
   var last_order_id = 1001
   var orders = {}
   var openOrders = {}
+  // let debug = true // debug output specific to the sim exchange
   let debug = false // debug output specific to the sim exchange
 
   // When orders change in any way, it's likely our "_hold" values have changed. Recalculate them
