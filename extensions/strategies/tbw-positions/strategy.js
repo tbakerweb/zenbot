@@ -117,7 +117,11 @@ async function getOpenPositions(s, cb) {
 
   // Query and wait for the openPositions
   const openPositions = await Position.find(query).sort(sort).exec();
-  s.strategy.positions = openPositions;
+  if (openPositions) {
+    s.strategy.positions = openPositions;
+  } else {
+    s.strategy.positions = [];
+  }
   cb();
 }
 async function closePosition(my_trade, s, cb) {
@@ -263,20 +267,16 @@ module.exports = {
 
   },
 
-  // THIS WORKS but not asynchronously
-  // Get a Buy Size, overriding a percentage based buy
-  // Return a size for the ASSET in the order:  Example, BTC coins:  0.123, not USD: $500
-  // getBuySize: function (percent_size, price, s) {
 
   // Get a Buy Size, overriding a percentage based buy
   // Return a size for the ASSET in the order:  Example, BTC coins:  0.123, not USD: $500
   getBuySize: function (percent_size, price, s, cb) {
 
     // The Percentage based calculation is available for use as percent_size
-    // console.log(percent_size);
 
     // tbw-positions has a configuration for how much USD to purchase with one position
     size = n((1 / price) * s.options.position_size_in_usd).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
+    // console.log('Offering BUY size of ', size);
     cb(size)
 
   },
@@ -338,58 +338,8 @@ module.exports = {
   // On Period Function - Produces Buy/Sell signals
   onPeriod: function (s, cb) {
 
-
-    // getOpenPositions(s, function (openPositions) {
-
-    //   // s.strategy.positions = openPositions
-    //   s.strategy.positions = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-    //     if (p._doc.status == 'open') {
-    //       return p
-    //     }
-    //   })
-    // });
-
-    // s.strategy.positions = openPositions
-    // const openPositions =
-
-    // const openPositions = (async () => {
-
-
-    //   // Define Mongo Search
-    //   // Define Query
-    //   var query = {
-    //     status: 'open',
-    //     "bot.mode": s.options.mode,
-    //     "bot.selector.normalized": s.options.selector.normalized
-    //   }
-
-    //   // Sort the Open Positions lowest 
-    //   var sort = {
-    //     'target.price': 1
-    //   }
-
-    //   // Only use positions from this Simulation
-    //   if (s.options.mode == 'sim') {
-    //     query['bot.session_id'] = strategy_session_id;
-    //   }
-
-
-
-    //   const openPositions = await Position.find(query).sort(sort).exec();
-    //   return openPositions
-
-    // })();
-    (async (s) => {
-      getOpenPositions(s)
-    })
-
-    // _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-    //   if (p._doc.status == 'open') {
-    //     return p
-    //   }
-    // })
-
-    // console.log('refreshed positions: ' + s.strategy.positions.length)
+    // Refresh the Open Positions list from the DB
+    getOpenPositions(s, function () { })
 
     // Create Tally variables for Buy/Sell signals
     let totalBuy = 0
@@ -455,86 +405,86 @@ module.exports = {
     // 
 
 
-    // // Evaluate opening a position with BUY
-    if (s.signal == 'buy') {
+    // // // Evaluate opening a position with BUY
+    // if (s.signal == 'buy') {
 
-      // Positions are worthless if they are too close together.
-      // Positions should be at least half the percentage gain away from another position
-      if (s.strategy.positions.length > 0) {
+    //   // Positions are worthless if they are too close together.
+    //   // Positions should be at least half the percentage gain away from another position
+    //   if (s.strategy.positions.length > 0) {
 
-        // Determine what a suitable distance between open price amounts should be
-        var period_close = n(s.lookback[0].close).value();
-        var period_target_price = n(period_close).multiply(1 + (s.options.position_target_gain_percent / 100)).value();
+    //     // Determine what a suitable distance between open price amounts should be
+    //     var period_close = n(s.lookback[0].close).value();
+    //     var period_target_price = n(period_close).multiply(1 + (s.options.position_target_gain_percent / 100)).value();
 
-        // Prepare to match any overlaps in Position Size
-        var overlap = false
+    //     // Prepare to match any overlaps in Position Size
+    //     var overlap = false
 
-        // Check each current position
-        s.strategy.positions.forEach(position => {
+    //     // Check each current position
+    //     s.strategy.positions.forEach(position => {
 
-          // Calculate a High and Low range the Position occupies  low = 95% of Positions,  High is 105%
-          var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
-          var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
+    //       // Calculate a High and Low range the Position occupies  low = 95% of Positions,  High is 105%
+    //       var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
+    //       var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
 
-          // If the current buy would result in a position that overlaps with this position
-          if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
-            overlap = true
-          }
-        });
+    //       // If the current buy would result in a position that overlaps with this position
+    //       if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
+    //         overlap = true
+    //       }
+    //     });
 
-        // Test to see if an overlap was found
-        if (overlap) {
-          // console.log('Strategy OnPeriod DISCARDING Buy Signal, Position Overlap based on Target Profits')
-          s.signal = null
-        } else {
+    //     // Test to see if an overlap was found
+    //     if (overlap) {
+    //       // console.log('Strategy OnPeriod DISCARDING Buy Signal, Position Overlap based on Target Profits')
+    //       s.signal = null
+    //     } else {
 
-          // console.log('Strategy OnPeriod Supports Buy Signal, it does NOT overlap with any of the existing ' + s.strategy.positions.length + ' positions.')
-          s.signal = 'buy'
-        }
-      }
+    //       // console.log('Strategy OnPeriod Supports Buy Signal, it does NOT overlap with any of the existing ' + s.strategy.positions.length + ' positions.')
+    //       s.signal = 'buy'
+    //     }
+    //   }
 
-      // Deposit Balance must be greater than the desired position size
-      if (s.signal == 'buy' && s.balance.currency < s.options.position_size_in_usd) {
-        s.signal = null
-      }
-    }
+    //   // Deposit Balance must be greater than the desired position size
+    //   if (s.signal == 'buy' && s.balance.currency < s.options.position_size_in_usd) {
+    //     // s.signal = null
+    //   }
+    // }
 
-    // Determine if a Position is ready to sell.
-    if (s.signal == 'sell') {
+    // // Determine if a Position is ready to sell.
+    // if (s.signal == 'sell') {
 
-      // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
-      if (s.strategy.positions.length > 0) {
+    //   // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
+    //   if (s.strategy.positions.length > 0) {
 
-        // Get the lowest open position by target price
-        // var period_close = n(s.lookback[0].close).value();
-        var period_low = n(s.lookback[0].low).value();
-        // var period_high = n(s.lookback[0].high).value();
+    //     // Get the lowest open position by target price
+    //     // var period_close = n(s.lookback[0].close).value();
+    //     var period_low = n(s.lookback[0].low).value();
+    //     // var period_high = n(s.lookback[0].high).value();
 
-        // Calculate the lowest Position Target Price
-        var lowestPositionTargetPrice = n(999999).value();
+    //     // Calculate the lowest Position Target Price
+    //     var lowestPositionTargetPrice = n(999999).value();
 
-        s.strategy.positions.forEach(position => {
-          var positionSellTarget = n(position._doc.target.price).value()
-          if (positionSellTarget < lowestPositionTargetPrice) {
-            lowestPositionTargetPrice = positionSellTarget
-          }
-        });
+    //     s.strategy.positions.forEach(position => {
+    //       var positionSellTarget = n(position._doc.target.price).value()
+    //       if (positionSellTarget < lowestPositionTargetPrice) {
+    //         lowestPositionTargetPrice = positionSellTarget
+    //       }
+    //     });
 
-        // If the lowest Target Price of the open positions is above the Ask, mark as sell
-        if (lowestPositionTargetPrice < period_low) {
-          // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
-          s.signal = 'sell'
-        } else {
-          s.signal = null
-          // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
+    //     // If the lowest Target Price of the open positions is above the Ask, mark as sell
+    //     if (lowestPositionTargetPrice < period_low) {
+    //       // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
+    //       s.signal = 'sell'
+    //     } else {
+    //       s.signal = null
+    //       // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
 
-        }
-      }
-    }
+    //     }
+    //   }
+    // }
 
-    if (s.signal) {
-      // console.log('SIGNAL: ' + s.signal)
-    }
+    // if (s.signal) {
+    //   // console.log('SIGNAL: ' + s.signal)
+    // }
     cb();
 
   },
@@ -610,27 +560,8 @@ module.exports = {
       position.save(function (err, position) {
         if (err) console.log(err);
 
-        // console.log('')
-        // console.log("Bought Position at: " + position.open.price + ", Target Sell: " + position.target.price)
-
         getOpenPositions(s, cb);
 
-        // Sort the Positions to get the lowest price
-        // var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-        //   // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-        //   return p.target.price
-        // })
-
-        // // Log the Open Positions
-        // if (s.strategy.positions.length > 0) {
-        //   console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + s.strategy.positions[0]._doc.target.price)
-        //   // console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
-        // } else {
-        //   console.log('Currently Open [' + s.strategy.positions.length + ']')
-        // }
-
-        // Call Back to the caller
-        // cb();
       })
     }
 
@@ -664,6 +595,9 @@ module.exports = {
       position_cols.push(' Highest: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).format('00.0000'), ' ')[color])
       position_cols.push(' L/H Spread: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).subtract(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
     }
+
+    // Show the Current Signal
+    position_cols.push(' Signal:  ' + s.signal)
 
     // Return the Position Column data
     return position_cols;

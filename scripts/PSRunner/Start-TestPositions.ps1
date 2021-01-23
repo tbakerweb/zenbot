@@ -24,7 +24,7 @@ $Periods = @('7m', '10m')
 # $TargetGainPercents = @(0.1, 0.75, 1, 1.25, 1.5, 1.75, 2.0, 
 #     2.25, 2.5, 3.0, 3.5, 4.0, 5.0, 6.0, 7.0, 
 #     8.0, 9.0, 10.12.5, 15, 17.5, 20, 40, 50, 75)
-$TargetGainPercents = @( 5.0, 6.0, 7.0, 8.0, 9.0, 10.12.5, 15)
+$TargetGainPercents = @( 3.0, 5.0, 7.0, 8.0, 9.0, 10.0, 15.0)
 
 # Create a Key for each combination
 $Configs = foreach ($Period in $Periods) {
@@ -74,7 +74,7 @@ $Configs | ForEach-Object {
     Write-Host $PositionSize -ForegroundColor Yellow
     
     ## Run the Simulation
-    node ./zenbot sim $Selector --strategy $Stratagy --days $Days --start_capital 650 --period $Period --period_length $Period --position_target_gain_percent $TargetGainPercent --position_size_in_usd $PositionSize
+    node ./zenbot sim $Selector --currency_captial 20000 --strategy $Stratagy --days $Days --period $Period --period_length $Period --position_target_gain_percent $TargetGainPercent --position_size_in_usd $PositionSize --debug
 
     ## Increase the Counter
     $Count++
