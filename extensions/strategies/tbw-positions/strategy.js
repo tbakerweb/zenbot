@@ -7,6 +7,7 @@ var momentum = require('../momentum/strategy')
 var crypto = require('crypto')
 var Phenotypes = require('../../../lib/phenotype')
 var n = require('numbro')
+var z = require('zero-fill')
 var _ = require('lodash')
 
 
@@ -89,7 +90,7 @@ const positionSchema = new mongoose.Schema({
 
 // Create a Model Interface to the Collection
 const Position = mongoose.model('Position', positionSchema);
-async function refreshOpenPositions(s, cb) {
+async function getOpenPositions(s, cb) {
 
   // Find Lowest  Positiions:
   //  position.status = Open
@@ -116,7 +117,80 @@ async function refreshOpenPositions(s, cb) {
 
   // Query and wait for the openPositions
   const openPositions = await Position.find(query).sort(sort).exec();
-  cb(openPositions);
+  s.strategy.positions = openPositions;
+  cb();
+}
+async function closePosition(my_trade, s, cb) {
+
+  // Find Lowest  Positiions:
+  //  position.status = Open
+  //  position.bot.mode = [sim | live | paper ]
+  //  bot.selector Must match the current exchange/asset
+  //  bot.strategy_session_id Must match the current session if running in Simulation
+
+  // Define Query
+  var query = {
+    status: 'open',
+    "bot.mode": s.options.mode,
+    "bot.selector.normalized": s.options.selector.normalized
+  }
+
+  // Sort the Open Positions lowest 
+  var sort = {
+    'target.price': 1
+  }
+
+  // Only use positions from this Simulation
+  if (s.options.mode == 'sim') {
+    query['bot.session_id'] = strategy_session_id;
+  }
+
+  // Query and wait for the openPositions
+  const openPositions = await Position.find(query).sort(sort).exec();
+
+  // Assess the Open positions
+  if (openPositions.length > 0) {
+    var lowestPosition = openPositions[0]
+
+    // Calculate Position Target-Closing Details
+    var position_close_usd = n(my_trade.size) * n(my_trade.price);
+    var position_gain_usd = position_close_usd - lowestPosition._doc.open.usd
+    // var position_gain_percent = (position_gain_usd / lowestPosition.open.usd) * 100
+    var position_time_open = my_trade.time - lowestPosition.open.timestamp
+
+    // Closed Position Details
+    lowestPosition.status = 'closed'
+    lowestPosition.closed = {
+      timestamp: my_trade.time,
+      session_id: strategy_session_id,
+      price: my_trade.price,
+      usd: position_close_usd,
+      execution_time: my_trade.execution_time,
+      order_id: my_trade.order_id,
+      order_type: my_trade.order_type,
+      price: my_trade.price,
+      size: my_trade.size,
+      fee: my_trade.fee,
+      slippage: my_trade.slippage,
+      gain_usd: position_gain_usd,
+      // gain_percent: position_gain_percent,
+      time_open: position_time_open
+    }
+
+
+
+    // Update the Position to Closed.
+    lowestPosition.save(function (err, position) {
+      if (err) console.log(err);
+
+      // Refresh the Open Positions array
+      getOpenPositions(s, cb);
+
+    })
+  } else {
+
+    cb();
+  }
 }
 
 
@@ -131,7 +205,8 @@ module.exports = {
 
   // Import the Position Model
   Position: Position,
-  // updateOpenPositions, updateOpenPositions,
+  getOpenPositions: getOpenPositions,
+  closePosition, closePosition,
 
   // Get Startup Configuration Options
   getOptions: function () {
@@ -186,9 +261,6 @@ module.exports = {
     ehlers_ft.calculate(s)
     momentum.calculate(s)
 
-    // TODO TODO TODO - This disables critical functionality I need to integrate here.  The current issue is that the ontrade (not on period) is where some of the trade signals come from.  This means that the code I've built into the onPeriod doesn't run here. 
-    // I'm debugging the buy/sell signal over rides that positions require.  Don't allow the calculate to do anything but keep data fresh.
-    // s.signal = null
   },
 
   // THIS WORKS but not asynchronously
@@ -267,15 +339,55 @@ module.exports = {
   onPeriod: function (s, cb) {
 
 
-    refreshOpenPositions(s, function (openPositions) {
+    // getOpenPositions(s, function (openPositions) {
 
-      // s.strategy.positions = openPositions
-      s.strategy.positions = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-        if (p._doc.status == 'open') {
-          return p
-        }
-      })
-    });
+    //   // s.strategy.positions = openPositions
+    //   s.strategy.positions = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+    //     if (p._doc.status == 'open') {
+    //       return p
+    //     }
+    //   })
+    // });
+
+    // s.strategy.positions = openPositions
+    // const openPositions =
+
+    // const openPositions = (async () => {
+
+
+    //   // Define Mongo Search
+    //   // Define Query
+    //   var query = {
+    //     status: 'open',
+    //     "bot.mode": s.options.mode,
+    //     "bot.selector.normalized": s.options.selector.normalized
+    //   }
+
+    //   // Sort the Open Positions lowest 
+    //   var sort = {
+    //     'target.price': 1
+    //   }
+
+    //   // Only use positions from this Simulation
+    //   if (s.options.mode == 'sim') {
+    //     query['bot.session_id'] = strategy_session_id;
+    //   }
+
+
+
+    //   const openPositions = await Position.find(query).sort(sort).exec();
+    //   return openPositions
+
+    // })();
+    (async (s) => {
+      getOpenPositions(s)
+    })
+
+    // _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+    //   if (p._doc.status == 'open') {
+    //     return p
+    //   }
+    // })
 
     // console.log('refreshed positions: ' + s.strategy.positions.length)
 
@@ -318,7 +430,7 @@ module.exports = {
       totalSell += 1
 
 
-    // Clear the Signal from the last Period Calculations
+    // Clear the Signal from the last Period Calculations so it can be updated by concensus
     s.signal = null
 
     // Calculate the Signal 
@@ -357,13 +469,14 @@ module.exports = {
         // Prepare to match any overlaps in Position Size
         var overlap = false
 
-        // Look to see if a position 'slot' is open (non overlapping with another position)
+        // Check each current position
         s.strategy.positions.forEach(position => {
 
-
+          // Calculate a High and Low range the Position occupies  low = 95% of Positions,  High is 105%
           var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
           var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
 
+          // If the current buy would result in a position that overlaps with this position
           if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
             overlap = true
           }
@@ -419,7 +532,7 @@ module.exports = {
       }
     }
 
-    if(s.signal){
+    if (s.signal) {
       // console.log('SIGNAL: ' + s.signal)
     }
     cb();
@@ -431,102 +544,6 @@ module.exports = {
 
     // Get the trade that just executed
     var my_trade = s.my_trades[s.my_trades.length - 1]
-
-
-    async function closePosition(s, cb) {
-
-      // Find Lowest  Positiions:
-      //  position.status = Open
-      //  position.bot.mode = [sim | live | paper ]
-      //  bot.selector Must match the current exchange/asset
-      //  bot.strategy_session_id Must match the current session if running in Simulation
-
-      // Define Query
-      var query = {
-        status: 'open',
-        "bot.mode": s.options.mode,
-        "bot.selector.normalized": s.options.selector.normalized
-      }
-
-      // Sort the Open Positions lowest 
-      var sort = {
-        'target.price': 1
-      }
-
-      // Only use positions from this Simulation
-      if (s.options.mode == 'sim') {
-        query['bot.session_id'] = strategy_session_id;
-      }
-
-      // Query and wait for the openPositions
-      const openPositions = await Position.find(query).sort(sort).exec();
-
-      // Assess the Open positions
-      if (openPositions.length > 0) {
-        var lowestPosition = openPositions[0]
-
-        // Calculate Position Target-Closing Details
-        var position_close_usd = n(my_trade.size) * n(my_trade.price);
-        var position_gain_usd = position_close_usd - lowestPosition._doc.open.usd
-        // var position_gain_percent = (position_gain_usd / lowestPosition.open.usd) * 100
-        var position_time_open = my_trade.time - lowestPosition.open.timestamp
-
-        // Closed Position Details
-        lowestPosition.status = 'closed'
-        lowestPosition.closed = {
-          timestamp: my_trade.time,
-          session_id: strategy_session_id,
-          price: my_trade.price,
-          usd: position_close_usd,
-          execution_time: my_trade.execution_time,
-          order_id: my_trade.order_id,
-          order_type: my_trade.order_type,
-          price: my_trade.price,
-          size: my_trade.size,
-          fee: my_trade.fee,
-          slippage: my_trade.slippage,
-          gain_usd: position_gain_usd,
-          // gain_percent: position_gain_percent,
-          time_open: position_time_open
-        }
-
-
-
-        // Update the Position to Closed.
-        lowestPosition.save(function (err, position) {
-          if (err) console.log(err);
-
-
-          refreshOpenPositions(s, function (openPositions) {
-
-            s.strategy.positions = openPositions
-            // s.strategy.positions = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-            //   if (p._doc.status == 'open') {
-            //     return p
-            //   }
-            // })
-            var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-              // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-              return p.target.price
-            })
-
-            console.log('')
-            console.log("SOLD Position at: " + position.closed.price + ', Currency Gain: ' + position.closed.gain_usd)
-
-            if (s.strategy.positions.length > 0) {
-              console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
-            } else {
-              console.log('Currently Open [' + s.strategy.positions.length + ']')
-            }
-
-            cb();
-          });
-
-        })
-      } else {
-        console.log('No positions are open this should not happen')
-      }
-    }
 
     // Open a Position when Buying
     if (type == 'buy') {
@@ -593,31 +610,27 @@ module.exports = {
       position.save(function (err, position) {
         if (err) console.log(err);
 
-        console.log('')
-        console.log("Bought Position at: " + position.open.price + ", Target Sell: " + position.target.price)
+        // console.log('')
+        // console.log("Bought Position at: " + position.open.price + ", Target Sell: " + position.target.price)
 
-        refreshOpenPositions(s, function (openPositions) {
+        getOpenPositions(s, cb);
 
-          // Save th Open Positions from the DB
-          s.strategy.positions = openPositions
+        // Sort the Positions to get the lowest price
+        // var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
+        //   // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
+        //   return p.target.price
+        // })
 
-          // Sort the Positions to get the lowest price
-          // var targetPositionPrices = _.sortBy(s.strategy.positions, [function (p) { return p.target.price }]).map(p => {
-          //   // var targetPositionPrices = _.sortBy(openPositions, [function (p) { return p.target.price }]).map(p => {
-          //   return p.target.price
-          // })
+        // // Log the Open Positions
+        // if (s.strategy.positions.length > 0) {
+        //   console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + s.strategy.positions[0]._doc.target.price)
+        //   // console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
+        // } else {
+        //   console.log('Currently Open [' + s.strategy.positions.length + ']')
+        // }
 
-          // Log the Open Positions
-          if (s.strategy.positions.length > 0) {
-            console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + s.strategy.positions[0]._doc.target.price)
-            // console.log('Currently Open [' + s.strategy.positions.length + '] Lowest Position Target: ' + targetPositionPrices[0])
-          } else {
-            console.log('Currently Open [' + s.strategy.positions.length + ']')
-          }
-
-          // Call Back to the caller
-          cb();
-        });
+        // Call Back to the caller
+        // cb();
       })
     }
 
@@ -625,26 +638,36 @@ module.exports = {
     if (type == 'sell') {
 
       // Run the Close Position Function
-      closePosition(s, cb);
+      closePosition(my_trade, s, cb);
 
     }
 
   },
 
   onReport: function (s) {
-    var cols = []
+    var position_cols = []
 
-    // var color = 'grey'
-    // if (s.period.macd_histogram > 0) {
-    //   color = 'green'
-    // }
-    // else if (s.period.macd_histogram < 0) {
-    //   color = 'red'
-    // }
-    // cols.push('Open Positions: '[color])
-    // cols.push(z(8, n(s.period.overbought_rsi).format('00'), ' ').cyan)
+    // Calculate a Period Report
 
-    return cols.concat(pivot.onReport(s), macd.onReport(s), ehlers_ft.onReport(s), momentum.onReport(s))
+    var color = 'cyan'
+
+    // Column 1 - Number of Open Positions
+    position_cols.push(' Open: ' + z(2, n(s.strategy.positions.length).format('0'), ' ')[color])
+
+    // Column 2 - Lowest open Position
+    if (s.strategy.positions.length > 0) {
+      position_cols.push(' Lowest: ' + z(8, n(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
+    }
+
+    // Column 3 - Highest open Position
+    if (s.strategy.positions.length > 1) {
+      position_cols.push(' Highest: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).format('00.0000'), ' ')[color])
+      position_cols.push(' L/H Spread: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).subtract(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
+    }
+
+    // Return the Position Column data
+    return position_cols;
+    // return position_cols.concat(pivot.onReport(s), macd.onReport(s), ehlers_ft.onReport(s), momentum.onReport(s))
   },
 
   phenotypes: {
