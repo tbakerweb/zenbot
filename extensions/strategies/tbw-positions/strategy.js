@@ -88,7 +88,7 @@ const positionSchema = new mongoose.Schema({
 
 });
 
-// Create a Model Interface to the Collection
+// // Create a Model Interface to the Collection
 const Position = mongoose.model('Position', positionSchema);
 async function getOpenPositions(s, cb) {
 
@@ -122,6 +122,9 @@ async function getOpenPositions(s, cb) {
   } else {
     s.strategy.positions = [];
   }
+
+  // console.log('Open Positions: ', s.strategy.positions.length)
+
   cb();
 }
 async function closePosition(my_trade, s, cb) {
@@ -218,15 +221,15 @@ module.exports = {
     this.option('period_length', 'period length, same as --period', String, '30m')
 
     // PIVOT
-    // this.option('period_length', 'period length', String, '30m')
+    this.option('period_length', 'period length', String, '30m')
     this.option('min_periods', 'min periods', Number, 50)
     this.option('up', 'up', Number, 1)
     this.option('down', 'down', Number, 1)
 
     // MACD / TA_MACD
-    // this.option('period', 'period length, same as --period_length', String, '1h')
-    // this.option('period_length', 'period length, same as --period', String, '1h')
-    // this.option('min_periods', 'min. number of history periods', Number, 52)
+    this.option('period', 'period length, same as --period_length', String, '1h')
+    this.option('period_length', 'period length, same as --period', String, '1h')
+    this.option('min_periods', 'min. number of history periods', Number, 52)
     this.option('ema_short_period', 'number of periods for the shorter EMA', Number, 12)
     this.option('ema_long_period', 'number of periods for the longer EMA', Number, 26)
     this.option('signal_period', 'number of periods for the signal EMA', Number, 9)
@@ -236,16 +239,16 @@ module.exports = {
     this.option('overbought_rsi', 'sold when RSI exceeds this value', Number, 70)
 
     // ETHLERS_FT
-    // this.option('period', 'period length, same as --period_length', String, '30m')
-    // this.option('period_length', 'period length, same as --period', String, '30m')
+    this.option('period', 'period length, same as --period_length', String, '30m')
+    this.option('period_length', 'period length, same as --period', String, '30m')
     this.option('fish_pct_change', 'percent change of fisher transform for reversal', Number, 0)
     this.option('length', 'number of past periods to use including current', Number, 10)
     this.option('src', 'use period.close if not defined. can be hl2, hlc3, ohlc4, HAhlc3, HAohlc4', String, 'hl2')
     this.option('pos_length', 'check this number of previous periods have opposing pos value', Number, 1)
 
     // MOMENTUM
-    // this.option('period', 'period length, same as --period_length', String, '1h')
-    // this.option('period_length', 'period length, same as --period', String, '1h')
+    this.option('period', 'period length, same as --period_length', String, '1h')
+    this.option('period_length', 'period length, same as --period', String, '1h')
     this.option('momentum_size', 'number of periods to look back for momentum', Number, 5)
 
     // POSITION
@@ -255,7 +258,11 @@ module.exports = {
 
   // On Engine Initialization
   onEngineInit: function (s) {
-    s.strategy.positions = []
+    (async (s) => {
+
+      getOpenPositions(s, function () { });
+    })
+    // s.strategy.positions = []
   },
 
   // Calculate Calculate Strategy Data
@@ -264,7 +271,6 @@ module.exports = {
     macd.calculate(s)
     ehlers_ft.calculate(s)
     momentum.calculate(s)
-
   },
 
 
@@ -273,11 +279,12 @@ module.exports = {
   getBuySize: function (percent_size, price, s, cb) {
 
     // The Percentage based calculation is available for use as percent_size
+    cb(percent_size);
 
     // tbw-positions has a configuration for how much USD to purchase with one position
-    size = n((1 / price) * s.options.position_size_in_usd).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
+    // size = n((1 / price) * s.options.position_size_in_usd).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
     // console.log('Offering BUY size of ', size);
-    cb(size)
+    // cb(size)
 
   },
 
@@ -287,51 +294,51 @@ module.exports = {
 
     // The Percentage based calculation is available for use as percent_size
     // console.log(percent_size);
+    cb(percent_size);
 
-    // If there is an open position, get the open position size to sell.  Otherwise, allow the position size to deterine the right size
-    if (s.strategy.positions.length > 0) {
+    //   // If there is an open position, get the open position size to sell.  Otherwise, allow the position size to deterine the right size
+    //   if (s.strategy.positions.length > 0) {
 
-      // Get the lowest open position by target price
-      var lowestPositionTargetPrice = n(99999999)
-      var lowestPositionSize = n(99999999)
-      // var periodHigh = n(s.lookback[0].high)
-      var currentPrice = n(price)
+    //     // Get the lowest open position by target price
+    //     var lowestPositionTargetPrice = n(99999999)
+    //     var lowestPositionSize = n(99999999)
+    //     // var periodHigh = n(s.lookback[0].high)
+    //     var currentPrice = n(price)
 
-      // Calculate the lowest Mature position
-      s.strategy.positions.forEach(position => {
-        var positionTargetPrice = n(position._doc.target.price)
-        var positionOpenSize = n(position._doc.open.size)
-        var positionTargetPrice = n(position._doc.target.price)
+    //     // Calculate the lowest Mature position
+    //     s.strategy.positions.forEach(position => {
+    //       var positionTargetPrice = n(position._doc.target.price)
+    //       var positionOpenSize = n(position._doc.open.size)
+    //       var positionTargetPrice = n(position._doc.target.price)
 
-        // Determine if this position is lower than existing
-        if (positionTargetPrice < lowestPositionTargetPrice) {
+    //       // Determine if this position is lower than existing
+    //       if (positionTargetPrice < lowestPositionTargetPrice) {
 
-          // Update the State Variables to select the right position
-          lowestPositionTargetPrice = positionTargetPrice
-          lowestPositionSize = positionOpenSize
-        }
-      });
+    //         // Update the State Variables to select the right position
+    //         lowestPositionTargetPrice = positionTargetPrice
+    //         lowestPositionSize = positionOpenSize
+    //       }
+    //     });
 
-      // Cancel a Sell if none of the positions are mature
-      if (lowestPositionTargetPrice._value < currentPrice._value) {
-        if (lowestPositionSize.multiply(0.99)._value < n(s.balance.asset)._value) {
-          size = lowestPositionSize.multiply(0.99).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
-        } else {
-          size = null;
-          s.signal = null;
-        }
-      } else {
-        size = null;
-        s.signal = null;
-      }
+    //     // Cancel a Sell if none of the positions are mature
+    //     if (lowestPositionTargetPrice._value < currentPrice._value) {
+    //       if (lowestPositionSize.multiply(0.99)._value < n(s.balance.asset)._value) {
+    //         size = lowestPositionSize.multiply(0.99).format(s.product.asset_increment ? s.product.asset_increment : '0.00000000')
+    //       } else {
+    //         size = null;
+    //         s.signal = null;
+    //       }
+    //     } else {
+    //       size = null;
+    //       s.signal = null;
+    //     }
 
-    } else {
-      size = 0.00000001
-      // s.signal = null;
-    }
+    //   } else {
+    //     size = 0.00000001
+    //   }
 
-    // Return the Sell size to quote
-    cb(size)
+    //   // Return the Sell size to quote
+    //   cb(size)
 
   },
 
@@ -339,7 +346,7 @@ module.exports = {
   onPeriod: function (s, cb) {
 
     // Refresh the Open Positions list from the DB
-    getOpenPositions(s, function () { })
+    // getOpenPositions(s, function () { })
 
     // Create Tally variables for Buy/Sell signals
     let totalBuy = 0
@@ -405,91 +412,88 @@ module.exports = {
     // 
 
 
-    // // // Evaluate opening a position with BUY
-    // if (s.signal == 'buy') {
+    // Evaluate opening a position with BUY
+    if (s.signal == 'buy') {
 
-    //   // Positions are worthless if they are too close together.
-    //   // Positions should be at least half the percentage gain away from another position
-    //   if (s.strategy.positions.length > 0) {
+      // Positions are worthless if they are too close together.
+      // Positions should be at least half the percentage gain away from another position
+      // if (s.strategy.positions.length > 0) {
 
-    //     // Determine what a suitable distance between open price amounts should be
-    //     var period_close = n(s.lookback[0].close).value();
-    //     var period_target_price = n(period_close).multiply(1 + (s.options.position_target_gain_percent / 100)).value();
+      //   // Determine what a suitable distance between open price amounts should be
+      //   var period_close = n(s.lookback[0].close).value();
+      //   var period_target_price = n(period_close).multiply(1 + (s.options.position_target_gain_percent / 100)).value();
 
-    //     // Prepare to match any overlaps in Position Size
-    //     var overlap = false
+      //   // Prepare to match any overlaps in Position Size
+      //   var overlap = false
 
-    //     // Check each current position
-    //     s.strategy.positions.forEach(position => {
+      //   // Check each current position
+      //   s.strategy.positions.forEach(position => {
 
-    //       // Calculate a High and Low range the Position occupies  low = 95% of Positions,  High is 105%
-    //       var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
-    //       var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
+      //     // Calculate a High and Low range the Position occupies  low = 95% of Positions,  High is 105%
+      //     var existingBufferLow = n(position._doc.target.price).multiply(0.95).value();
+      //     var existingBufferHigh = n(position._doc.target.price).multiply(1.05).value();
 
-    //       // If the current buy would result in a position that overlaps with this position
-    //       if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
-    //         overlap = true
-    //       }
-    //     });
+      //     // If the current buy would result in a position that overlaps with this position
+      //     if (existingBufferLow < period_target_price && period_target_price < existingBufferHigh) {
+      //       overlap = true
+      //     }
+      //   });
 
-    //     // Test to see if an overlap was found
-    //     if (overlap) {
-    //       // console.log('Strategy OnPeriod DISCARDING Buy Signal, Position Overlap based on Target Profits')
-    //       s.signal = null
-    //     } else {
+      //   // Test to see if an overlap was found
+      //   if (overlap) {
+      //     // console.log('Strategy OnPeriod DISCARDING Buy Signal, Position Overlap based on Target Profits')
+      //     s.signal = null
+      //   } else {
 
-    //       // console.log('Strategy OnPeriod Supports Buy Signal, it does NOT overlap with any of the existing ' + s.strategy.positions.length + ' positions.')
-    //       s.signal = 'buy'
-    //     }
-    //   }
+      //     // console.log('Strategy OnPeriod Supports Buy Signal, it does NOT overlap with any of the existing ' + s.strategy.positions.length + ' positions.')
+      //     s.signal = 'buy'
+      //   }
+      // }
 
-    //   // Deposit Balance must be greater than the desired position size
-    //   if (s.signal == 'buy' && s.balance.currency < s.options.position_size_in_usd) {
-    //     // s.signal = null
-    //   }
-    // }
+      // Deposit Balance must be greater than the desired position size
+      // if (s.signal == 'buy' && s.balance.currency < s.options.position_size_in_usd) {
+        // s.signal = null
+      // }
+    }
 
-    // // Determine if a Position is ready to sell.
-    // if (s.signal == 'sell') {
+    // Determine if a Position is ready to sell.
+    if (s.signal == 'sell') {
 
-    //   // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
-    //   if (s.strategy.positions.length > 0) {
+      // // Look to see if Any position has matured to the target price, overriding another signal.  This gives positions a chance to close at a period, if they have matured.
+      // if (s.strategy.positions.length > 0) {
 
-    //     // Get the lowest open position by target price
-    //     // var period_close = n(s.lookback[0].close).value();
-    //     var period_low = n(s.lookback[0].low).value();
-    //     // var period_high = n(s.lookback[0].high).value();
+      //   // Get the lowest open position by target price
+      //   // var period_close = n(s.lookback[0].close).value();
+      //   var period_low = n(s.lookback[0].low).value();
+      //   // var period_high = n(s.lookback[0].high).value();
 
-    //     // Calculate the lowest Position Target Price
-    //     var lowestPositionTargetPrice = n(999999).value();
+      //   // Calculate the lowest Position Target Price
+      //   var lowestPositionTargetPrice = n(999999).value();
 
-    //     s.strategy.positions.forEach(position => {
-    //       var positionSellTarget = n(position._doc.target.price).value()
-    //       if (positionSellTarget < lowestPositionTargetPrice) {
-    //         lowestPositionTargetPrice = positionSellTarget
-    //       }
-    //     });
+      //   s.strategy.positions.forEach(position => {
+      //     var positionSellTarget = n(position._doc.target.price).value()
+      //     if (positionSellTarget < lowestPositionTargetPrice) {
+      //       lowestPositionTargetPrice = positionSellTarget
+      //     }
+      //   });
 
-    //     // If the lowest Target Price of the open positions is above the Ask, mark as sell
-    //     if (lowestPositionTargetPrice < period_low) {
-    //       // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
-    //       s.signal = 'sell'
-    //     } else {
-    //       s.signal = null
-    //       // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
+      //   // If the lowest Target Price of the open positions is above the Ask, mark as sell
+      //   if (lowestPositionTargetPrice < period_low) {
+      //     // console.log('Strategy OnPeriod Supports Sell Signal, an open position matures below the last Period High.')
+      //     s.signal = 'sell'
+      //   } else {
+      //     s.signal = null
+      //     // console.log('Strategy OnPeriod DISCARDING Sell Signal.  No positions are matured. Lowest: ' + lowestPositionTargetPrice + ", Ask: " + period_high + ', difference of ' + (period_high - lowestPositionTargetPrice))
 
-    //     }
-    //   }
-    // }
+      //   }
+      // }
+    }
 
-    // if (s.signal) {
-    //   // console.log('SIGNAL: ' + s.signal)
-    // }
-    cb();
+    return cb();
 
   },
 
-  // Handle Order Completion notifications
+  // // Handle Order Completion notifications
   orderExecuted: function (s, type, cb) {
 
     // Get the trade that just executed
@@ -498,14 +502,16 @@ module.exports = {
     // Open a Position when Buying
     if (type == 'buy') {
 
-      // Calculate Position Target-Closing Details
-      var target_profit_percent = 1 + (n(s.options.position_target_gain_percent) / 100)
+      // console.log('Strategy recording a buy')
 
+      // // Calculate Position Target-Closing Details
+      var target_profit_percent = 1 + (n(s.options.position_target_gain_percent) / 100)
       var opening_fee_usd = n(my_trade.price) * my_trade.fee
       var position_amount_usd = n(my_trade.size) * n(my_trade.price);
       var position_investment_usd = opening_fee_usd + position_amount_usd;
       var target_close_at_usd = s.options.position_amount_usd * target_profit_percent;
       var target_close_at_price = n(my_trade.price) * target_profit_percent
+      // console.log('Target Close At: ', target_close_at_price)
 
       // Create a position record
       var position = new Position({
@@ -575,67 +581,72 @@ module.exports = {
 
   },
 
+
   onReport: function (s) {
-    var position_cols = []
+    var cols = []
 
-    // Calculate a Period Report
-
-    var color = 'cyan'
-
-    // Column 1 - Number of Open Positions
-    position_cols.push(' Open: ' + z(2, n(s.strategy.positions.length).format('0'), ' ')[color])
-
-    // Column 2 - Lowest open Position
-    if (s.strategy.positions.length > 0) {
-      position_cols.push(' Lowest: ' + z(8, n(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
-    }
-
-    // Column 3 - Highest open Position
-    if (s.strategy.positions.length > 1) {
-      position_cols.push(' Highest: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).format('00.0000'), ' ')[color])
-      position_cols.push(' L/H Spread: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).subtract(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
-    }
-
-    // Show the Current Signal
-    position_cols.push(' Signal:  ' + s.signal)
-
-    // Return the Position Column data
-    return position_cols;
-    // return position_cols.concat(pivot.onReport(s), macd.onReport(s), ehlers_ft.onReport(s), momentum.onReport(s))
+    return cols.concat(pivot.onReport(s), macd.onReport(s), ehlers_ft.onReport(s), momentum.onReport(s))
   },
+
+  // // POSITIONS
+  // onReport: function (s) {
+  //   var position_cols = []
+
+  //   // Calculate a Period Report
+
+  //   var color = 'cyan'
+
+  //   // Column 1 - Number of Open Positions
+  //   position_cols.push(' Open: ' + z(2, n(s.strategy.positions.length).format('0'), ' ')[color])
+
+  //   // Column 2 - Lowest open Position
+  //   if (s.strategy.positions.length > 0) {
+  //     position_cols.push(' Lowest: ' + z(8, n(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
+  //   }
+
+  //   // Column 3 - Highest open Position
+  //   if (s.strategy.positions.length > 1) {
+  //     position_cols.push(' Highest: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).format('00.0000'), ' ')[color])
+  //     position_cols.push(' L/H Spread: ' + z(8, n(s.strategy.positions[s.strategy.positions.length - 1]._doc.target.price).subtract(s.strategy.positions[0]._doc.target.price).format('00.0000'), ' ')[color])
+  //   }
+
+  //   // Show the Current Signal
+  //   position_cols.push(' Signal:  ' + s.signal)
+
+  //   // Return the Position Column data
+  //   return position_cols;
+  //   // return position_cols.concat(pivot.onReport(s), macd.onReport(s), ehlers_ft.onReport(s), momentum.onReport(s))
+  // },
 
   phenotypes: {
     // -- common
-    // period_length: Phenotypes.RangePeriod(1, 60, 'm'),
-    // min_periods: Phenotypes.Range(1, 200),
-    // markdown_buy_pct: Phenotypes.RangeFloat(-1, 5),
-    // markup_sell_pct: Phenotypes.RangeFloat(-1, 5),
-    // order_type: Phenotypes.ListOption(['maker', 'taker']),
-    // sell_stop_pct: Phenotypes.Range0(1, 50),
-    // buy_stop_pct: Phenotypes.Range0(1, 50),
-    // profit_stop_enable_pct: Phenotypes.Range0(1, 20),
-    // profit_stop_pct: Phenotypes.Range(1, 20),
-    // sell_stop_pct: Phenotypes.RangeFloat(0.4, 0.6),
-    // profit_stop_enable_pct: Phenotypes.RangeFloat(0.5, 1),
-    // quarentine_time: Phenotypes.ListOption([240, 270, 300]),
+    period_length: Phenotypes.RangePeriod(1, 60, 'm'),
+    min_periods: Phenotypes.Range(1, 200),
+    markdown_buy_pct: Phenotypes.RangeFloat(-1, 5),
+    markup_sell_pct: Phenotypes.RangeFloat(-1, 5),
+    order_type: Phenotypes.ListOption(['maker', 'taker']),
+    sell_stop_pct: Phenotypes.Range0(1, 50),
+    buy_stop_pct: Phenotypes.Range0(1, 50),
+    profit_stop_enable_pct: Phenotypes.Range0(1, 20),
+    profit_stop_pct: Phenotypes.Range(1, 20),
+    sell_stop_pct: Phenotypes.RangeFloat(0.4, 0.6),
+    profit_stop_enable_pct: Phenotypes.RangeFloat(0.5, 1),
+    quarentine_time: Phenotypes.ListOption([240, 270, 300]),
 
-    // // macd
-    // ema_short_period: Phenotypes.Range(1, 20),
-    // ema_long_period: Phenotypes.Range(20, 100),
-    // signal_period: Phenotypes.Range(1, 20),
-    // up_trend_threshold: Phenotypes.Range(0, 50),
-    // down_trend_threshold: Phenotypes.Range(0, 50),
-    // overbought_rsi_periods: Phenotypes.Range(1, 50),
-    // overbought_rsi: Phenotypes.Range(20, 100),
+    // macd
+    ema_short_period: Phenotypes.Range(1, 20),
+    ema_long_period: Phenotypes.Range(20, 100),
+    signal_period: Phenotypes.Range(1, 20),
+    up_trend_threshold: Phenotypes.Range(0, 50),
+    down_trend_threshold: Phenotypes.Range(0, 50),
+    overbought_rsi_periods: Phenotypes.Range(1, 50),
+    overbought_rsi: Phenotypes.Range(20, 100),
 
-    // // ehlers_ft
-    // length: Phenotypes.Range(1, 30),
-    // fish_pct_change: Phenotypes.Range(-25, 75),
-    // pos_length: Phenotypes.Range(1, 6),
-    // src: Phenotypes.ListOption(['close', 'hl2', 'hlc3', 'ohlc4', 'HAhlc3', 'HAohlc4']),
-
-    // // momentum
-    // momentum_size: Phenotypes.Range(1, 20),
+    // ehlers_ft
+    length: Phenotypes.Range(1, 30),
+    fish_pct_change: Phenotypes.Range(-25, 75),
+    pos_length: Phenotypes.Range(1, 6),
+    src: Phenotypes.ListOption(['close', 'hl2', 'hlc3', 'ohlc4', 'HAhlc3', 'HAohlc4']),
 
     // Positions
     position_target_gain_percent: Phenotypes.Range(1, 100),
