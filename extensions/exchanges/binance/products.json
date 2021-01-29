@@ -6504,11 +6504,11 @@
     "id": "COCOSBNB",
     "asset": "COCOS",
     "currency": "BNB",
-    "min_size": "1.00000000",
+    "min_size": "0.10000000",
     "max_size": "9000000.00000000",
     "min_total": "0.10000000",
-    "increment": "0.00000010",
-    "asset_increment": "1.00000000",
+    "increment": "0.00001000",
+    "asset_increment": "0.10000000",
     "label": "COCOS/BNB"
   },
   {
@@ -6526,11 +6526,11 @@
     "id": "COCOSUSDT",
     "asset": "COCOS",
     "currency": "USDT",
-    "min_size": "1.00000000",
-    "max_size": "9000000.00000000",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00000100",
-    "asset_increment": "1.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
     "label": "COCOS/USDT"
   },
   {
@@ -8817,7 +8817,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "BTCDOWN/USDT"
   },
@@ -9444,7 +9444,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "ETHDOWN/USDT"
   },
@@ -9466,7 +9466,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "ADADOWN/USDT"
   },
@@ -9488,7 +9488,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00000100",
     "asset_increment": "0.01000000",
     "label": "LINKDOWN/USDT"
   },
@@ -9906,7 +9906,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "BNBDOWN/USDT"
   },
@@ -11270,7 +11270,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "XRPDOWN/USDT"
   },
@@ -11292,7 +11292,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "DOTDOWN/USDT"
   },
@@ -11468,7 +11468,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "LTCDOWN/USDT"
   },
@@ -11853,7 +11853,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "UNIDOWN/USDT"
   },
@@ -12172,7 +12172,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "SXPUP/USDT"
   },
@@ -12183,7 +12183,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "SXPDOWN/USDT"
   },
@@ -12293,7 +12293,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "YFIDOWN/USDT"
   },
@@ -13063,7 +13063,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "AAVEDOWN/USDT"
   },
@@ -13294,7 +13294,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00010000",
+    "increment": "0.00001000",
     "asset_increment": "0.01000000",
     "label": "SUSHIDOWN/USDT"
   },
@@ -13316,7 +13316,7 @@
     "min_size": "0.01000000",
     "max_size": "920000.00000000",
     "min_total": "10.00000000",
-    "increment": "0.00100000",
+    "increment": "0.00010000",
     "asset_increment": "0.01000000",
     "label": "XLMDOWN/USDT"
   },
@@ -13748,5 +13748,181 @@
     "increment": "0.00100000",
     "asset_increment": "0.00100000",
     "label": "BTCST/USDT"
+  },
+  {
+    "id": "TRUBTC",
+    "asset": "TRU",
+    "currency": "BTC",
+    "min_size": "0.10000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "0.10000000",
+    "label": "TRU/BTC"
+  },
+  {
+    "id": "TRUBUSD",
+    "asset": "TRU",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "TRU/BUSD"
+  },
+  {
+    "id": "TRUUSDT",
+    "asset": "TRU",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "TRU/USDT"
+  },
+  {
+    "id": "DEXEETH",
+    "asset": "DEXE",
+    "currency": "ETH",
+    "min_size": "0.01000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.01000000",
+    "increment": "0.00000100",
+    "asset_increment": "0.01000000",
+    "label": "DEXE/ETH"
+  },
+  {
+    "id": "DEXEBUSD",
+    "asset": "DEXE",
+    "currency": "BUSD",
+    "min_size": "0.00100000",
+    "max_size": "90000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.00100000",
+    "label": "DEXE/BUSD"
+  },
+  {
+    "id": "EOSEUR",
+    "asset": "EOS",
+    "currency": "EUR",
+    "min_size": "0.00100000",
+    "max_size": "90000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00100000",
+    "asset_increment": "0.00100000",
+    "label": "EOS/EUR"
+  },
+  {
+    "id": "LTCBRL",
+    "asset": "LTC",
+    "currency": "BRL",
+    "min_size": "0.00001000",
+    "max_size": "45000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.01000000",
+    "asset_increment": "0.00001000",
+    "label": "LTC/BRL"
+  },
+  {
+    "id": "USDCBUSD",
+    "asset": "USDC",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "USDC/BUSD"
+  },
+  {
+    "id": "TUSDBUSD",
+    "asset": "TUSD",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "TUSD/BUSD"
+  },
+  {
+    "id": "PAXBUSD",
+    "asset": "PAX",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "PAX/BUSD"
+  },
+  {
+    "id": "CKBBTC",
+    "asset": "CKB",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "CKB/BTC"
+  },
+  {
+    "id": "CKBBUSD",
+    "asset": "CKB",
+    "currency": "BUSD",
+    "min_size": "1.00000000",
+    "max_size": "9000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00000100",
+    "asset_increment": "1.00000000",
+    "label": "CKB/BUSD"
+  },
+  {
+    "id": "CKBUSDT",
+    "asset": "CKB",
+    "currency": "USDT",
+    "min_size": "1.00000000",
+    "max_size": "9000000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00000100",
+    "asset_increment": "1.00000000",
+    "label": "CKB/USDT"
+  },
+  {
+    "id": "TWTBTC",
+    "asset": "TWT",
+    "currency": "BTC",
+    "min_size": "1.00000000",
+    "max_size": "90000000.00000000",
+    "min_total": "0.00010000",
+    "increment": "0.00000001",
+    "asset_increment": "1.00000000",
+    "label": "TWT/BTC"
+  },
+  {
+    "id": "TWTBUSD",
+    "asset": "TWT",
+    "currency": "BUSD",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "TWT/BUSD"
+  },
+  {
+    "id": "TWTUSDT",
+    "asset": "TWT",
+    "currency": "USDT",
+    "min_size": "0.01000000",
+    "max_size": "900000.00000000",
+    "min_total": "10.00000000",
+    "increment": "0.00010000",
+    "asset_increment": "0.01000000",
+    "label": "TWT/USDT"
   }
 ]

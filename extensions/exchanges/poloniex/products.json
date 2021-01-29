@@ -16,6 +16,22 @@
     "label": "Aave/Tether USD"
   },
   {
+    "asset": "ADABEAR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Short Cardano Token/Tether USD"
+  },
+  {
+    "asset": "ADABULL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Long Cardano Token/Tether USD"
+  },
+  {
     "asset": "ADEL",
     "currency": "USDT",
     "min_total": "1",
@@ -904,6 +920,14 @@
     "label": "FalconSwap/Tether USD"
   },
   {
+    "asset": "FTT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "FTX Token/Tether USD"
+  },
+  {
     "asset": "FUND",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -1136,6 +1160,14 @@
     "label": "Livepeer/Bitcoin"
   },
   {
+    "asset": "LPT",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Livepeer/Tether USD"
+  },
+  {
     "asset": "LRC",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -1190,6 +1222,22 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Litecoin/Tether USD"
+  },
+  {
+    "asset": "LTCBEAR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Short Litecoin Token/Tether USD"
+  },
+  {
+    "asset": "LTCBULL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Long Litecoin Token/Tether USD"
   },
   {
     "asset": "MANA",
@@ -1624,7 +1672,15 @@
     "label": "Lisk/Bitcoin"
   },
   {
-    "asset": "LSK",
+    "asset": "SRM",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Serum/Tether USD"
+  },
+  {
+    "asset": "STAKE",
     "currency": "USDT",
     "min_total": "1",
     "max_size": null,
@@ -1856,6 +1912,22 @@
     "label": "Stellar/USD Coin"
   },
   {
+    "asset": "TRU",
+    "currency": "BTC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "TrueFi/Bitcoin"
+  },
+  {
+    "asset": "TRU",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "TrueFi/Tether USD"
+  },
+  {
     "asset": "TRX",
     "currency": "BTC",
     "min_total": "0.0001",
@@ -1904,6 +1976,38 @@
     "label": "3X Long TRX Token/Tether USD"
   },
   {
+    "asset": "TUSD",
+    "currency": "USDC",
+    "min_total": "0.0001",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "TrueUSD/USD Coin"
+  },
+  {
+    "asset": "TUSD",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "TrueUSD/Tether USD"
+  },
+  {
+    "asset": "UMA",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "UMA/Tether USD"
+  },
+  {
+    "asset": "UNI",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Uniswap/Tether USD"
+  },
+  {
     "asset": "USDJ",
     "currency": "USDT",
     "min_total": "1",
@@ -1942,6 +2046,14 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Wrapped Bitcoin/Tether USD"
+  },
+  {
+    "asset": "WETH",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "Wrapped Ethereum on Tron/Tether USD"
   },
   {
     "asset": "WIN",
@@ -1990,6 +2102,22 @@
     "max_size": null,
     "increment": "0.00000001",
     "label": "Spark [IOU]/Tether USD"
+  },
+  {
+    "asset": "XLMBEAR",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Short Stellar Token/Tether USD"
+  },
+  {
+    "asset": "XLMBULL",
+    "currency": "USDT",
+    "min_total": "1",
+    "max_size": null,
+    "increment": "0.00000001",
+    "label": "3X Long Stellar Token/Tether USD"
   },
   {
     "asset": "XMR",
