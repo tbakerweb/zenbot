@@ -1,0 +1,46 @@
+{
+  "trend_ema": [
+    {
+      "period_length": "101m",
+      "min_periods": 72,
+      "markdown_buy_pct": 2.5155133897022735,
+      "markup_sell_pct": 1.0856195561524542,
+      "order_type": "taker",
+      "sell_stop_pct": 27,
+      "buy_stop_pct": 43,
+      "profit_stop_enable_pct": 0,
+      "profit_stop_pct": 20,
+      "trend_ema": 37,
+      "oversold_rsi_periods": 26,
+      "oversold_rsi": 100
+    },
+    {
+      "period_length": "100m",
+      "min_periods": 67,
+      "markdown_buy_pct": 1.0105003163075592,
+      "markup_sell_pct": 2.0214995121317365,
+      "order_type": "taker",
+      "sell_stop_pct": 0,
+      "buy_stop_pct": 44,
+      "profit_stop_enable_pct": 1,
+      "profit_stop_pct": 14,
+      "trend_ema": 6,
+      "oversold_rsi_periods": 46,
+      "oversold_rsi": 44
+    },
+    {
+      "period_length": "2m",
+      "min_periods": 10,
+      "markdown_buy_pct": 3.7251416367173737,
+      "markup_sell_pct": 4.022070191746874,
+      "order_type": "maker",
+      "sell_stop_pct": 4,
+      "buy_stop_pct": 9,
+      "profit_stop_enable_pct": 0,
+      "profit_stop_pct": 1,
+      "trend_ema": 35,
+      "oversold_rsi_periods": 37,
+      "oversold_rsi": 82
+    }
+  ]
+}

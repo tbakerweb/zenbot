@@ -1,0 +1,4 @@
+"Selector","Fitness","VS Buy Hold (%)","Win/Loss Ratio","# Trades/Day","Strategy","Order Type","Ending Balance ($)","Buy Hold ($)","# Wins","# Losses","Period","Min Periods","# Days","Full Parameters"
+"binanceus.BTC-USD",1,0,"Infinity",0,"trend_ema","maker",0,0,0,-1,0,0,0,"module.exports = {}"
+"binanceus.BTC-USD",1,0,"Infinity",0,"trend_ema","maker",0,0,0,-1,0,0,0,"module.exports = {}"
+"binanceus.BTC-USD",1,0,"Infinity",0,"trend_ema","maker",0,0,0,-1,0,0,0,"module.exports = {}"
