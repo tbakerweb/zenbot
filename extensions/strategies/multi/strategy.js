@@ -79,9 +79,13 @@ module.exports = {
       totalSell += 1
     
     s.signal = null
-    if(totalBuy >= 2 && totalBuy >= totalSell && totalSell == 0)
+    
+    requiredBuyConcensus = 2
+    requiredSellConcensus = 2
+    
+    if(totalBuy >= requiredBuyConcensus && totalBuy >= totalSell && totalSell == 0)
       s.signal = 'buy'
-    if(totalSell >= 2 && totalSell >= totalBuy && totalBuy == 0)
+    if(totalSell >= requiredSellConcensus && totalSell >= totalBuy && totalBuy == 0)
       s.signal = 'sell'
 
     if(s.signal == 'buy' && s.stopTriggered) {
