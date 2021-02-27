@@ -1,105 +1,14 @@
-
-// var async = require("async");
 var pivot = require('../pivot/strategy')
 var macd = require('../macd/strategy')
 var ehlers_ft = require('../ehlers_ft/strategy')
 var momentum = require('../momentum/strategy')
-var crypto = require('crypto')
+
 var Phenotypes = require('../../../lib/phenotype')
-var n = require('numbro')
 
-
-// Create an ID for this Strategy Session
-var strategy_session_id = crypto.randomBytes(4).toString('hex')
-
-const mongoose = require('mongoose');
-// const { Schema, Model } = mongoose
-// const { string } = require('mathjs')
-mongoose.connect('mongodb://192.168.1.99:27017/zenbot4', { useNewUrlParser: true });
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  // we're connected!
-});
-
-// Create a Document Schema for Position
-const positionSchema = new mongoose.Schema({
-
-  // Bot Instance Details
-  bot: {
-
-    // Timestamps
-    start_time: Date,
-
-    // Mode
-    mode: String,
-
-
-    // Selector and Strategy
-    selector: {},
-    strategy: String,
-    session_id: String,
-
-    // Conf
-    conf: String,
-    options: {},
-  },
-
-  // Position Opening Event Details
-  open: {
-    session_id: String,
-    timestamp: Date,
-    execution_time: String,
-    order_id: String,
-    order_type: String,
-    price: String,
-    size: String,
-    usd: String,
-    fee: String,
-    slippage: String
-  },
-
-  // Target Position Sell Details
-  target: {
-    price: String,
-    usd: String,
-  },
-
-  // Closed Position Details
-  closed: {
-    session_id: String,
-    timestamp: Date,
-    execution_time: String,
-    order_id: String,
-    order_type: String,
-    price: String,
-    size: String,
-    usd: String,
-    fee: String,
-    slippage: String
-  },
-
-  // Status and log
-  status: String,
-  log: [String],
-
-});
-
-// Create a Model Interface to the Collection
-const Position = mongoose.model('Position', positionSchema);
-
-// Export the Functionality in this Strategy
 module.exports = {
-
-  // Name and Description
-  name: 'tbw-multi',
+  name: 'multi',
   description: 'This strategy utilize: pivot macd momentum ehlers_ft.',
 
-  // Import the Position Model
-  Position: Position,
-
-  // Get Startup Configuration Options
   getOptions: function () {
     this.option('period', 'period length, same as --period_length', String, '30m')
     this.option('period_length', 'period length, same as --period', String, '30m')
@@ -136,82 +45,52 @@ module.exports = {
     this.option('momentum_size', 'number of periods to look back for momentum', Number, 5)
   },
 
-  // Calculate Calculate Strategy Data
   calculate: function (s) {
     pivot.calculate(s)
     macd.calculate(s)
     ehlers_ft.calculate(s)
     momentum.calculate(s)
-    if (s.signal) {
-      console.log(s.signal)
-    }
   },
 
-  // On Period Function - Produces Buy/Sell signals
   onPeriod: function (s, cb) {
-
-    // Create Tally variables for Buy/Sell signals
-    let totalBuy = 0
-    let totalSell = 0
-
-    //
-    // Calculate OnPeriod updates - Ensure the lookback buffer if full to get the first one going
-    //
-
-    // Calculate Pivot
+    let tally = 0
     if (s && s.lookback && s.lookback.constructor === Array && s.lookback.length > 5 && s.lookback[1].high && s.lookback[5].high) {
       pivot.onPeriod(s, function () { })
       if (s.signal == 'buy')
-        totalBuy += 1
+        tally += 1
       if (s.signal == 'sell')
-        totalSell += 1
+        tally -= 1
     }
-
-    // Calculate MACD
     macd.onPeriod(s, function () { })
     if (s.signal == 'buy')
-      totalBuy += 1
+      tally += 1
     if (s.signal == 'sell')
-      totalSell += 1
-
-    // Calculate ehlers_ft
+      tally -= 1
     ehlers_ft.onPeriod(s, function () { })
     if (s.signal == 'buy')
-      totalBuy += 1
+      tally += 1
     if (s.signal == 'sell')
-      totalSell += 1
-
-    // Calculate Momentum
+      tally -= 1
     momentum.onPeriod(s, function () { })
     if (s.signal == 'buy')
-      totalBuy += 1
+      tally += 1
     if (s.signal == 'sell')
-      totalSell += 1
+      tally -= 1
 
-
-    // Clear the Signal from the last Period Calculations
     s.signal = null
 
-    // Calculate the Signal 
-    if (totalBuy >= 2 && totalBuy >= totalSell && totalSell == 0)
-      s.signal = 'buy'
-    if (totalSell >= 2 && totalSell >= totalBuy && totalBuy == 0)
-      s.signal = 'sell'
+    // Assign the signal based on a majority vote (no signal, no vote.)
+    if (tally < 0) { s.signal = 'sell' }
+    if (tally > 0) { s.signal = 'buy' }
 
-    // Stop Triggered for Buy
     if (s.signal == 'buy' && s.stopTriggered) {
       s.stopTriggered = false
     }
 
-    // Stop Triggered for Sell
     if (s.signal == 'sell' && s.stopTriggered) {
       s.signal = null
     }
-
-    // Return to the calling execution 
-    cb();
-
-
+    return cb()
   },
 
   onReport: function (s) {
@@ -250,10 +129,7 @@ module.exports = {
     src: Phenotypes.ListOption(['close', 'hl2', 'hlc3', 'ohlc4', 'HAhlc3', 'HAohlc4']),
 
     // momentum
-    momentum_size: Phenotypes.Range(1, 20),
-
-    // momentum
-    position_target_gain_percent: Phenotypes.Range(1, 100)
+    momentum_size: Phenotypes.Range(1, 20)
   }
 }
 

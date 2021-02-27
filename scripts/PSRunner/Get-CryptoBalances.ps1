@@ -69,9 +69,10 @@ ForEach ($ExchangeName in $Exchanges) {
         ## Create the 'Normalized' Selector 
         $Selector = $ExchangeName + '.' + $TradePairName
         if($JSON){
-            node ./zenbot.js balance $Selector --conf tbw-local-binanceus-multi-BTC.js --json true
+            node ./zenbot.js balance $Selector -c true --json true
         } else {
-            node ./zenbot.js balance $Selector --conf tbw-local-binanceus-multi-BTC.js
+            # node ./zenbot.js balance $Selector --conf tbw-local-binanceus-multi-BTC.js
+            node ./zenbot.js balance $Selector -c true
         }
     }
 }
