@@ -15,7 +15,7 @@ var strategy_session_id = crypto.randomBytes(4).toString('hex')
 const mongoose = require('mongoose');
 // const { Schema, Model } = mongoose
 // const { string } = require('mathjs')
-mongoose.connect('mongodb://192.168.1.99:27017/zenbot4', { useNewUrlParser: true });
+mongoose.connect('mongodb://192.168.1.95:27017/zenbot4', { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
