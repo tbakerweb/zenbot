@@ -14,10 +14,12 @@ If you are running Windows use the following command:
 docker-compose --file=docker-compose-windows.yml up
 ```
 
+
 If you wish to run commands (e.g. backfills, list-selectors), you can run this separate command after a successful `docker-compose up -d`:
 ```
 docker-compose exec server zenbot list-selectors
 docker-compose exec server zenbot backfill <selector> --days <days>
+docker-compose exec server zenbot trade --paper
 ```
 
 #### Updating Docker

@@ -1,0 +1,5 @@
+.\zenbot.bat trade --conf tbw-local-binanceus-trend_ema-BTC.json
+.\zenbot.bat trade --conf tbw-local-binanceus-trend_ema-ETH.json
+.\zenbot.bat trade --conf tbw-local-binanceus-trend_ema-XRP.json
+.\zenbot.bat trade --conf tbw-local-binanceus-trend_ema-LTC.json
+.\zenbot.bat trade --conf tbw-local-binanceus-trend_ema-ONE.json

@@ -3,8 +3,8 @@
     "id": "BTCUSD",
     "asset": "BTC",
     "currency": "USD",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "10000",
     "increment": "0.01",
     "label": "BTC/USD"
   },
@@ -12,28 +12,19 @@
     "id": "BTCEUR",
     "asset": "BTC",
     "currency": "EUR",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "10000",
     "increment": "0.01",
     "label": "BTC/EUR"
   },
   {
-    "id": "BTCGBP",
-    "asset": "BTC",
-    "currency": "GBP",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "id": "EURUSD",
+    "asset": "EUR",
+    "currency": "USD",
+    "min_total": "5",
+    "max_size": "10000",
     "increment": "0.01",
-    "label": "BTC/GBP"
-  },
-  {
-    "id": "BTCPAX",
-    "asset": "BTC",
-    "currency": "PAX",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.01",
-    "label": "BTC/PAX"
+    "label": "EUR/USD"
   },
   {
     "id": "BTCUSDC",
@@ -48,80 +39,8 @@
     "id": "GBPUSD",
     "asset": "GBP",
     "currency": "USD",
-    "min_size": "0.00001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "GBP/USD"
-  },
-  {
-    "id": "GBPEUR",
-    "asset": "GBP",
-    "currency": "EUR",
-    "min_size": "0.00001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "GBP/EUR"
-  },
-  {
-    "id": "EURUSD",
-    "asset": "EUR",
-    "currency": "USD",
-    "min_size": "0.00001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "EUR/USD"
-  },
-  {
-    "id": "XRPUSD",
-    "asset": "XRP",
-    "currency": "USD",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "XRP/USD"
-  },
-  {
-    "id": "XRPEUR",
-    "asset": "XRP",
-    "currency": "EUR",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "XRP/EUR"
-  },
-  {
-    "id": "XRPBTC",
-    "asset": "XRP",
-    "currency": "BTC",
-    "min_size": "0.00000001",
-    "min_total": "0.001",
-    "increment": "0.00000001",
-    "label": "XRP/BTC"
-  },
-  {
-    "id": "XRPGBP",
-    "asset": "XRP",
-    "currency": "GBP",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "XRP/GBP"
-  },
-  {
-    "id": "XRPPAX",
-    "asset": "XRP",
-    "currency": "PAX",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.00001",
-    "label": "XRP/PAX"
-  },
-  {
-    "id": "LTCUSD",
-    "asset": "LTC",
-    "currency": "USD",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "1000000",
     "increment": "0.01",
     "label": "LTC/USD"
   },
@@ -129,8 +48,8 @@
     "id": "LTCEUR",
     "asset": "LTC",
     "currency": "EUR",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "1000000",
     "increment": "0.01",
     "label": "LTC/EUR"
   },
@@ -138,26 +57,44 @@
     "id": "LTCBTC",
     "asset": "LTC",
     "currency": "BTC",
-    "min_size": "0.00000001",
     "min_total": "0.001",
-    "increment": "0.00000001",
+    "max_size": "1000000",
+    "increment": "0.00001",
     "label": "LTC/BTC"
   },
   {
-    "id": "LTCGBP",
-    "asset": "LTC",
-    "currency": "GBP",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.01",
-    "label": "LTC/GBP"
+    "id": "XRPUSD",
+    "asset": "XRP",
+    "currency": "USD",
+    "min_total": "5",
+    "max_size": "1000000",
+    "increment": "0.00001",
+    "label": "XRP/USD"
   },
   {
+    "id": "XRPEUR",
+    "asset": "XRP",
+    "currency": "EUR",
+    "min_total": "5",
+    "max_size": "1000000",
+    "increment": "0.00001",
+    "label": "XRP/EUR"
+  },
+  {
+    "id": "XRPBTC",
+    "asset": "XRP",
+    "currency": "BTC",
+    "min_total": "0.001",
+    "max_size": "1000000",
+    "increment": "0.00001",
+    "label": "XRP/BTC"
+  },
+{
     "id": "ETHUSD",
     "asset": "ETH",
     "currency": "USD",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "1000000",
     "increment": "0.01",
     "label": "ETH/USD"
   },
@@ -165,8 +102,8 @@
     "id": "ETHEUR",
     "asset": "ETH",
     "currency": "EUR",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "1000000",
     "increment": "0.01",
     "label": "ETH/EUR"
   },
@@ -174,9 +111,9 @@
     "id": "ETHBTC",
     "asset": "ETH",
     "currency": "BTC",
-    "min_size": "0.00000001",
     "min_total": "0.001",
-    "increment": "0.00000001",
+    "max_size": "1000000",
+    "increment": "0.00001",
     "label": "ETH/BTC"
   },
   {
@@ -210,8 +147,8 @@
     "id": "BCHUSD",
     "asset": "BCH",
     "currency": "USD",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "10000",
     "increment": "0.01",
     "label": "BCH/USD"
   },
@@ -219,8 +156,8 @@
     "id": "BCHEUR",
     "asset": "BCH",
     "currency": "EUR",
-    "min_size": "0.00000001",
-    "min_total": "25",
+    "min_total": "5",
+    "max_size": "10000",
     "increment": "0.01",
     "label": "BCH/EUR"
   },
@@ -228,26 +165,8 @@
     "id": "BCHBTC",
     "asset": "BCH",
     "currency": "BTC",
-    "min_size": "0.00000001",
     "min_total": "0.001",
-    "increment": "0.00000001",
-    "label": "BCH/BTC"
-  },
-  {
-    "id": "BCHGBP",
-    "asset": "BCH",
-    "currency": "GBP",
-    "min_size": "0.00000001",
-    "min_total": "25",
-    "increment": "0.01",
-    "label": "BCH/GBP"
-  },
-  {
-    "id": "PAXUSD",
-    "asset": "PAX",
-    "currency": "USD",
-    "min_size": "0.00001",
-    "min_total": "25",
+    "max_size": "1000000",
     "increment": "0.00001",
     "label": "PAX/USD"
   },

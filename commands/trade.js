@@ -64,7 +64,7 @@ module.exports = function (program, conf) {
     .option('--debug', 'output detailed debug info')
     .action(function (selector, cmd) {
       var raw_opts = minimist(process.argv)
-      var s = {options: JSON.parse(JSON.stringify(raw_opts))}
+      var s = { options: JSON.parse(JSON.stringify(raw_opts)) }
       var so = s.options
       if (so.run_for) {
         var botStartTime = moment().add(so.run_for, 'm')
@@ -89,7 +89,7 @@ module.exports = function (program, conf) {
       })
       so.currency_increment = cmd.currency_increment
       so.keep_lookback_periods = cmd.keep_lookback_periods
-      so.use_prev_trades = (cmd.use_prev_trades||conf.use_prev_trades)
+      so.use_prev_trades = (cmd.use_prev_trades || conf.use_prev_trades)
       so.min_prev_trades = cmd.min_prev_trades
       so.debug = cmd.debug
       so.stats = !cmd.disable_stats
@@ -129,7 +129,7 @@ module.exports = function (program, conf) {
         })
       }
 
-      function listOptions () {
+      function listOptions() {
         printLog(s.exchange.name.toUpperCase() + ' exchange active trading options:'.grey, true)
         printLog(z(22, 'STRATEGY'.grey, ' ') + '\t' + so.strategy + '\t' + (require(`../extensions/strategies/${so.strategy}/strategy`).description).grey, true)
         printLog([
@@ -161,7 +161,7 @@ module.exports = function (program, conf) {
       }
 
       /* Implementing statistical Exit */
-      function printTrade (quit, dump, statsonly = false) {
+      function printTrade(quit, dump, statsonly = false) {
         var tmp_balance = n(s.balance.currency).add(n(s.period.close).multiply(s.balance.asset)).format('0.00000000')
         if (quit) {
           if (s.my_trades.length) {
@@ -234,51 +234,51 @@ module.exports = function (program, conf) {
           var data = s.lookback.slice(0, s.lookback.length - so.min_periods).map(function (period) {
             var data = {}
             var keys = Object.keys(period)
-            for(var i = 0; i < keys.length; i++){
+            for (var i = 0; i < keys.length; i++) {
               data[keys[i]] = period[keys[i]]
             }
             return data
           })
           var code = 'var data = ' + JSON.stringify(data) + ';\n'
           code += 'var trades = ' + JSON.stringify(s.my_trades) + ';\n'
-          var tpl = fs.readFileSync(path.resolve(__dirname, '..', 'templates', 'sim_result.html.tpl'), {encoding: 'utf8'})
+          var tpl = fs.readFileSync(path.resolve(__dirname, '..', 'templates', 'sim_result.html.tpl'), { encoding: 'utf8' })
           var out = tpl
             .replace('{{code}}', code)
             .replace('{{trend_ema_period}}', so.trend_ema || 36)
             .replace('{{output}}', html_output)
-            .replace(/\{\{symbol\}\}/g,  so.selector.normalized + ' - zenbot ' + require('../package.json').version)
+            .replace(/\{\{symbol\}\}/g, so.selector.normalized + ' - zenbot ' + require('../package.json').version)
           if (so.filename !== 'none') {
             var out_target
             var out_target_prefix = so.paper ? 'simulations/paper_result_' : 'stats/trade_result_'
-            if(dump){
+            if (dump) {
               var dt = new Date().toISOString()
 
               //ymd
               var today = dt.slice(2, 4) + dt.slice(5, 7) + dt.slice(8, 10)
-              out_target = so.filename || out_target_prefix + so.selector.normalized +'_' + today + '_UTC.html'
+              out_target = so.filename || out_target_prefix + so.selector.normalized + '_' + today + '_UTC.html'
               fs.writeFileSync(out_target, out)
-            }else
-              out_target = so.filename || out_target_prefix + so.selector.normalized +'_' + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/20/, '') + '_UTC.html'
+            } else
+              out_target = so.filename || out_target_prefix + so.selector.normalized + '_' + new Date().toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/20/, '') + '_UTC.html'
 
             fs.writeFileSync(out_target, out)
             console.log('\nwrote'.grey, out_target)
           }
-          if(quit) process.exit(0)
+          if (quit) process.exit(0)
         }
       }
       /* The end of printTrade */
 
       /* Implementing statistical status dump every 10 secs */
       var shouldSaveStats = false
-      function toggleStats(){
+      function toggleStats() {
         shouldSaveStats = !shouldSaveStats
-        if(shouldSaveStats)
+        if (shouldSaveStats)
           printLog('Auto stats dump enabled')
         else
           printLog('Auto stats dump disabled')
       }
 
-      function saveStatsLoop(){
+      function saveStatsLoop() {
         saveStats()
         setTimeout(function () {
           saveStatsLoop()
@@ -286,8 +286,8 @@ module.exports = function (program, conf) {
       }
       saveStatsLoop()
 
-      function saveStats () {
-        if(!shouldSaveStats) return
+      function saveStats() {
+        if (!shouldSaveStats) return
 
         var output_lines = []
         var tmp_balance = n(s.balance.currency).add(n(s.period.close).multiply(s.balance.asset)).format('0.00000000')
@@ -339,19 +339,19 @@ module.exports = function (program, conf) {
         var data = s.lookback.slice(0, s.lookback.length - so.min_periods).map(function (period) {
           var data = {}
           var keys = Object.keys(period)
-          for(var i = 0; i < keys.length; i++){
+          for (var i = 0; i < keys.length; i++) {
             data[keys[i]] = period[keys[i]]
           }
           return data
         })
         var code = 'var data = ' + JSON.stringify(data) + ';\n'
         code += 'var trades = ' + JSON.stringify(s.my_trades) + ';\n'
-        var tpl = fs.readFileSync(path.resolve(__dirname, '..', 'templates', 'sim_result.html.tpl'), {encoding: 'utf8'})
+        var tpl = fs.readFileSync(path.resolve(__dirname, '..', 'templates', 'sim_result.html.tpl'), { encoding: 'utf8' })
         var out = tpl
           .replace('{{code}}', code)
           .replace('{{trend_ema_period}}', so.trend_ema || 36)
           .replace('{{output}}', html_output)
-          .replace(/\{\{symbol\}\}/g,  so.selector.normalized + ' - zenbot ' + require('../package.json').version)
+          .replace(/\{\{symbol\}\}/g, so.selector.normalized + ' - zenbot ' + require('../package.json').version)
         if (so.filename !== 'none') {
           var out_target
           var dt = new Date().toISOString()
@@ -359,7 +359,7 @@ module.exports = function (program, conf) {
           //ymd
           var today = dt.slice(2, 4) + dt.slice(5, 7) + dt.slice(8, 10)
           let out_target_prefix = so.paper ? 'simulations/paper_result_' : 'stats/trade_result_'
-          out_target = so.filename || out_target_prefix + so.selector.normalized +'_' + today + '_UTC.html'
+          out_target = so.filename || out_target_prefix + so.selector.normalized + '_' + today + '_UTC.html'
 
           fs.writeFileSync(out_target, out)
           //console.log('\nwrote'.grey, out_target)
@@ -369,7 +369,7 @@ module.exports = function (program, conf) {
 
       function printLog(str, cr = false) {
         if (str) {
-          console.log((cr?'\n':'') + str)
+          console.log((cr ? '\n' : '') + str)
           pushStr += str + '\n'
         }
       }
@@ -385,7 +385,7 @@ module.exports = function (program, conf) {
       function executeKey(key, info) {
         if (key === 'l') {
           listKeys()
-        } else if (key === 'b' && !info.ctrl ) {
+        } else if (key === 'b' && !info.ctrl) {
           engine.executeSignal('buy')
           printLog('manual'.grey + ' limit ' + 'BUY'.green + ' command executed'.grey, true)
         } else if (key === 'B' && !info.ctrl) {
@@ -450,6 +450,7 @@ module.exports = function (program, conf) {
       var days = Math.ceil((new Date().getTime() - query_start) / 86400000)
       var session = null
       var sessions = collectionServiceInstance.getSessions()
+      var sessionlogs = collectionServiceInstance.getSessionLogs()
       var balances = collectionServiceInstance.getBalances()
       var trades = collectionServiceInstance.getTrades()
       var resume_markers = collectionServiceInstance.getResumeMarkers()
@@ -479,20 +480,20 @@ module.exports = function (program, conf) {
         if (code) {
           process.exit(code)
         }
-        function getNext () {
+        function getNext() {
           var opts = {
             query: {
               selector: so.selector.normalized
             },
-            sort: {time: 1},
+            sort: { time: 1 },
             limit: 1000
           }
           if (db_cursor) {
-            opts.query.time = {$gt: db_cursor}
+            opts.query.time = { $gt: db_cursor }
           }
           else {
             trade_cursor = s.exchange.getCursor(query_start)
-            opts.query.time = {$gte: query_start}
+            opts.query.time = { $gte: query_start }
           }
           trades.find(opts.query).limit(opts.limit).sort(opts.sort).toArray(function (err, trades) {
             if (err) throw err
@@ -504,9 +505,9 @@ module.exports = function (program, conf) {
                 limit: so.min_prev_trades
               }
               if (!so.min_prev_trades) {
-                prevOpts.query.time = {$gte : trades[0].time}
+                prevOpts.query.time = { $gte: trades[0].time }
               }
-              my_trades.find(prevOpts.query).sort({$natural:-1}).limit(prevOpts.limit).toArray(function (err, my_prev_trades) {
+              my_trades.find(prevOpts.query).sort({ $natural: -1 }).limit(prevOpts.limit).toArray(function (err, my_prev_trades) {
                 if (err) throw err
                 if (my_prev_trades.length) {
                   s.my_prev_trades = my_prev_trades.reverse().slice(0) // simple copy, less recent executed first
@@ -537,7 +538,7 @@ module.exports = function (program, conf) {
                   options: so
                 }
                 session._id = session.id
-                sessions.find({selector: so.selector.normalized}).limit(1).sort({started: -1}).toArray(function (err, prev_sessions) {
+                sessions.find({ selector: so.selector.normalized }).limit(1).sort({ started: -1 }).toArray(function (err, prev_sessions) {
                   if (err) throw err
                   var prev_session = prev_sessions[0]
                   if (prev_session && !cmd.reset_profit) {
@@ -549,8 +550,8 @@ module.exports = function (program, conf) {
                       }
                     }
                   }
-                  if(s.lookback.length > so.keep_lookback_periods){
-                    s.lookback.splice(-1,1)
+                  if (s.lookback.length > so.keep_lookback_periods) {
+                    s.lookback.splice(-1, 1)
                   }
 
                   forwardScan()
@@ -580,8 +581,8 @@ module.exports = function (program, conf) {
       })
 
       var prev_timeout = null
-      function forwardScan () {
-        function saveSession () {
+      function forwardScan() {
+        function saveSession() {
           engine.syncBalance(function (err) {
             if (!err && s.balance.asset === undefined) {
               // TODO not the nicest place to verify the state, but did not found a better one
@@ -593,7 +594,7 @@ module.exports = function (program, conf) {
               if (err.body) console.error(err.body)
               console.error(err)
             }
-            if (botStartTime && botStartTime - moment() < 0 ) {
+            if (botStartTime && botStartTime - moment() < 0) {
               // Not sure if I should just handle exit code directly or thru printTrade.  Decided on printTrade being if code is added there for clean exits this can just take advantage of it.
               engine.exit(() => {
                 printTrade(true)
@@ -628,7 +629,7 @@ module.exports = function (program, conf) {
               b.vs_buy_hold = (b.consolidated - b.buy_hold) / b.buy_hold
               conf.output.api.on && printTrade(false, false, true)
               if (so.mode === 'live') {
-                balances.replaceOne({_id: b.id}, b, {upsert: true}, function (err) {
+                balances.replaceOne({ _id: b.id }, b, { upsert: true }, function (err) {
                   if (err) {
                     console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving balance')
                     console.error(err)
@@ -643,19 +644,32 @@ module.exports = function (program, conf) {
                 asset: s.balance.asset
               }
             }
-            sessions.replaceOne({_id: session.id}, session, {upsert: true}, function (err) {
+            sessions.replaceOne({ _id: session.id }, session, { upsert: true }, function (err) {
               if (err) {
                 console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving session')
                 console.error(err)
               }
-              if (s.period) {
-                engine.writeReport(true)
-              } else {
-                readline.clearLine(process.stdout)
-                readline.cursorTo(process.stdout, 0)
-                process.stdout.write('Waiting on first live trade to display reports, could be a few minutes ...')
-              }
             })
+
+            let sessionLog
+            if (s.period) {
+              sessionLog = engine.writeReport(true)
+              sessionLog.session_id = session.id
+            } else {
+              readline.clearLine(process.stdout)
+              readline.cursorTo(process.stdout, 0)
+              process.stdout.write('Waiting on first live trade to display reports, could be a few minutes ...')
+            }
+
+            // If the Session Log was updated
+            if (sessionLog) {
+              sessionlogs.insertOne(sessionLog, function (err) {
+                if (err) {
+                  console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving session log')
+                  console.error(err)
+                }
+              })
+            }
           })
         }
         var opts = {
@@ -699,7 +713,7 @@ module.exports = function (program, conf) {
                 console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving session')
                 console.error(err)
               }
-              resume_markers.replaceOne({_id: marker.id}, marker, {upsert: true}, function (err) {
+              resume_markers.replaceOne({ _id: marker.id }, marker, { upsert: true }, function (err) {
                 if (err) {
                   console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving marker')
                   console.error(err)
@@ -721,14 +735,14 @@ module.exports = function (program, conf) {
                 })
                 my_trades_size = s.my_trades.length
               }
-              function savePeriod (period) {
+              function savePeriod(period) {
                 if (!period.id) {
                   period.id = crypto.randomBytes(4).toString('hex')
                   period.selector = so.selector.normalized
                   period.session_id = session.id
                 }
                 period._id = period.id
-                periods.replaceOne({_id: period.id}, period, {upsert: true}, function (err) {
+                periods.replaceOne({ _id: period.id }, period, { upsert: true }, function (err) {
                   if (err) {
                     console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving my_trade')
                     console.error(err)
@@ -746,11 +760,10 @@ module.exports = function (program, conf) {
             })
           }
           else {
-            trade_cursor += parseInt(so.poll_trades)
             saveSession()
           }
         })
-        function saveTrade (trade) {
+        function saveTrade(trade) {
           trade.id = so.selector.normalized + '-' + String(trade.trade_id)
           trade._id = trade.id
           trade.selector = so.selector.normalized
@@ -761,7 +774,7 @@ module.exports = function (program, conf) {
           }
           marker.to = marker.to ? Math.max(marker.to, trade_cursor) : trade_cursor
           marker.newest_time = Math.max(marker.newest_time, trade.time)
-          trades.save(trade, function (err) {
+          trades.insertOne(trade, function (err) {
             // ignore duplicate key errors
             if (err && err.code !== 11000) {
               console.error('\n' + moment().format('YYYY-MM-DD HH:mm:ss') + ' - error saving trade')

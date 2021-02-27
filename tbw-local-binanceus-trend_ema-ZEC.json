@@ -2,7 +2,11 @@
     "mongo": {
         "db": "zenbot4",
         "connectionString": null,
-        "host": "192.168.1.99",
+<<<<<<< HEAD
+        "host": "192.168.1.95",
+=======
+        "host": "192.168.1.5",
+>>>>>>> bdae2d1817cd895d77c796582b4896d1175d0066
         "port": 27017,
         "username": null,
         "password": null,
@@ -172,7 +176,11 @@
     "output": {
         "api": {
             "on": true,
-            "ip": "192.168.1.99",
+<<<<<<< HEAD
+            "ip": "192.168.1.95",
+=======
+            "ip": "192.168.1.5",
+>>>>>>> bdae2d1817cd895d77c796582b4896d1175d0066
             "port": 17366
         }
     }

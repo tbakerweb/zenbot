@@ -5,11 +5,11 @@ c.mongo = {}
 c.mongo.db = 'zenbot4'
 
 // Must provide EITHER c.mongo.connectionString OR c.mongo.host,port,username,password
-c.mongo.connectionString = '' // 'mongodb://192.168.1.99:27017/?replicaSet=rs0&readPreference=nearest&appname=Zenbot&ssl=false'
+c.mongo.connectionString = '' // 'mongodb://192.168.1.5:27017/?replicaSet=rs0&readPreference=nearest&appname=Zenbot&ssl=false'
 
 // The following is not needed when c.mongo.connectionString is provided:
 // c.mongo.host = 'lt-101.birdhouse.lan'
-c.mongo.host = '192.168.1.99'
+c.mongo.host = '192.168.1.5'
 c.mongo.port = 27017
 c.mongo.username = null
 c.mongo.password = null
@@ -29,25 +29,54 @@ c.mongo.authMechanism = null
 c.selector = 'binanceus.BTC-USD'
 
 
-// Positions Strategy
-// c.period = '30m'; c.period_length = '30m'
-// c.period = '25m'; c.period_length = '25m'
-// c.period = '20m'; c.period_length = '20m'
-// c.period = '15m'; c.period_length = '15m'
-// c.period = '10m'; c.period_length = '10m'
-// c.period = '7m'; c.period_length = '7m'
-// c.period = '5m';  c.period_length = '5m'
-c.period = '2m';  c.period_length = '2m'
-// c.period = '1m';  c.period_length = '1m'
-c.position_target_gain_percent = 7
-c.position_size_in_usd = 100
-// c.strategy = 'tbw-positions'
+//
+// Strategy Results: Trend EMA
+// c.strategy = 'trend_ema'
+//                      // 14 Days
+//                      // 2021-02-03
+//                      // vs by hold
+// c.period = '60m'     //  -8.21
+// c.period = '45m'     //  -8.21
+// c.period = '30m'     //  -6.59 
+// c.period = '25m'		//  -7.93
+// c.period = '20m'		//  -4.32
+// c.period = '15m'		//	-4.95
+// c.period = '10m'		//	-5.84
+// c.period = '7m'		//	-7.85
+// c.period = '5m' 		//	-5.05
+// c.period = '2m' 		//	-5.05
+// c.period = '1m' 		//	-3.82
+// c.strategy = 'multi'
+
+//
+// Strategy Results: Multi (Original)
+//                      // 14 Days
+//                      // 2021-02-03
+//                      // vs by hold
+// c.period = '60m'		//  -5.50
+// c.period = '45m'		//  -5.14
+// c.period = '30m'		//  -5.14
+// c.period = '25m'		//  -5.04
+// c.period = '20m'		//  -5.04
+c.period = '15m'		//	
+// c.period = '10m'		//	
+// c.period = '7m' 		//	
+// c.period = '5m' 		//	
+// c.period = '2m' 		//	
+// c.period = '1m' 		//	
 c.strategy = 'multi'
 
+//
+// Strategy Results: TBW-Positions
+// c.strategy = 'tbw-positions'
+// c.position_target_gain_percent = 7
+// c.position_size_in_usd = 100
 
+// Update the period_length variable to the same as period
+c.period_length = c.period;
 c.quarentine_time = 15
 
-c.buy_pct = 33
+c.buy_pct = 15
 c.sell_pct = 75
 
 //
@@ -161,5 +190,5 @@ c.output = {}
 // REST API
 c.output.api = {}
 c.output.api.on = true
-c.output.api.ip = '192.168.1.99' // IPv4 or IPv6 address to listen on, uses all available interfaces if omitted
+c.output.api.ip = '192.168.1.5' // IPv4 or IPv6 address to listen on, uses all available interfaces if omitted
 c.output.api.port = 17369

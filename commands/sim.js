@@ -50,6 +50,7 @@ module.exports = function (program, conf) {
     .option('--enable_stats', 'enable printing order stats')
     .option('--backtester_generation <generation>','creates a json file in simulations with the generation number', Number, -1)
     .option('--verbose', 'print status lines on every period')
+    .option('--position_target_gain_percent <usd_to_open_position>','How much USD to open a poition with')
     .option('--silent', 'only output on completion (can speed up sim)')
     .action(function (selector, cmd) {
       var s = { options: minimist(process.argv) }
@@ -237,6 +238,8 @@ module.exports = function (program, conf) {
       }
 
       var getNext = async () => {
+        // Debug
+        // console.log('getNext Called: ')
         var opts = {
           query: {
             selector: so.selector.normalized
@@ -248,6 +251,9 @@ module.exports = function (program, conf) {
         if (so.end) {
           opts.query.time = { $lte: so.end }
         }
+
+        // Debug
+        // console.log('getNext Checking Cursor: ',cursor)
         if (cursor) {
           if (reversing) {
             opts.query.time = {}
@@ -264,14 +270,19 @@ module.exports = function (program, conf) {
           if (!opts.query.time) opts.query.time = {}
           opts.query.time['$gte'] = query_start
         }
+        
+        // Debug
+        // console.log('getNext getting New collectionCursor from trades collection')
         var collectionCursor = tradesCollection
-          .find(opts.query)
-          .sort(opts.sort)
-          .limit(opts.limit)
-
+        .find(opts.query)
+        .sort(opts.sort)
+        .limit(opts.limit)
+        
+        // console.log('getNext getting collectionCursor Count')
         var totalTrades = await collectionCursor.count(true)
+        // console.log('getNext getting collectionCursor Count was :', totalTrades)
         const collectionCursorStream = collectionCursor.stream()
-
+        
         var numTrades = 0
         var lastTrade
 
@@ -300,6 +311,9 @@ module.exports = function (program, conf) {
         }
 
         collectionCursorStream.on('data', function(trade) {
+          // Debug
+          // console.log('ReceivedDataFromCursorStream: ', trade)
+
           lastTrade = trade
           numTrades++
           if (so.symmetrical && reversing) {
