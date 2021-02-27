@@ -25,9 +25,11 @@ c.strategy = 'trend_ema'
 
 // to enable GDAX trading, enter your API credentials:
 c.gdax = {}
-c.gdax.key = 'YOUR-API-KEY'
-c.gdax.b64secret = 'YOUR-BASE64-SECRET'
-c.gdax.passphrase = 'YOUR-PASSPHRASE'
+c.gdax.key = process.env.ZENBOT_GDAX_API_KEY || 'YOUR-API-KEY'
+c.gdax.b64secret = process.env.ZENBOT_GDAX_B64_SECRET || 'YOUR-API-SECRET'
+c.gdax.passphrase = process.env.ZENBOT_GDAX_PASSPHRASE || 'YOUR-API-PASSPHRASE'
+// set to true to trade on the sandbox platform API
+c.gdax.sandbox = process.env.ZENBOT_GDAX_SANDBOX || false
 
 // to enable Poloniex trading, enter your API credentials:
 c.poloniex = {}
@@ -85,20 +87,6 @@ c.cexio.username = 'YOUR-CLIENT-ID'
 c.cexio.key = 'YOUR-API-KEY'
 c.cexio.secret = 'YOUR-SECRET'
 
-// to enable QuadrigaCX tranding, enter your API credentials:
-c.quadriga = {}
-c.quadriga.key = 'YOUR-API-KEY'
-// this is the manual secret key entered by editing the API access
-// and NOT the md5 hash you see in the summary
-c.quadriga.secret = 'YOUR-SECRET'
-// replace with the client id used at login, as a string, not number
-c.quadriga.client_id = 'YOUR-CLIENT-ID'
-
-// to enable WEX.NZ trading, enter your API credentials:
-// Note: WexNZ only supports backfilling the last ~1/4 day ATM.
-c.wexnz = {}
-c.wexnz.key = 'YOUR-API-KEY'
-c.wexnz.secret = 'YOUR-SECRET'
 
 // to enable Gemini trading, enter your API credentials:
 c.gemini = {}

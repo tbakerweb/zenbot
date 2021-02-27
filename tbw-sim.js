@@ -8,7 +8,7 @@ c.mongo.db = 'zenbot4'
 // c.mongo.connectionString = 'mongodb://u:p@host/db?params'
 
 // The following is not needed when c.mongo.connectionString is provided:
-c.mongo.host = process.env.MONGODB_PORT_27017_TCP_ADDR || '192.168.1.99'
+c.mongo.host = process.env.MONGODB_PORT_27017_TCP_ADDR || '192.168.1.5'
 c.mongo.port = 27017
 c.mongo.username = null
 c.mongo.password = null

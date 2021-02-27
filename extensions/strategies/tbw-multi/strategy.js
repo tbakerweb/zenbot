@@ -2,6 +2,90 @@ var pivot = require('../pivot/strategy')
 var macd = require('../macd/strategy')
 var ehlers_ft = require('../ehlers_ft/strategy')
 var momentum = require('../momentum/strategy')
+<<<<<<< HEAD
+=======
+var crypto = require('crypto')
+var Phenotypes = require('../../../lib/phenotype')
+var n = require('numbro')
+
+
+// Create an ID for this Strategy Session
+var strategy_session_id = crypto.randomBytes(4).toString('hex')
+
+const mongoose = require('mongoose');
+// const { Schema, Model } = mongoose
+// const { string } = require('mathjs')
+mongoose.connect('mongodb://192.168.1.5:27017/zenbot4', { useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  // we're connected!
+});
+
+// Create a Document Schema for Position
+const positionSchema = new mongoose.Schema({
+
+  // Bot Instance Details
+  bot: {
+
+    // Timestamps
+    start_time: Date,
+
+    // Mode
+    mode: String,
+
+
+    // Selector and Strategy
+    selector: {},
+    strategy: String,
+    session_id: String,
+
+    // Conf
+    conf: String,
+    options: {},
+  },
+
+  // Position Opening Event Details
+  open: {
+    session_id: String,
+    timestamp: Date,
+    execution_time: String,
+    order_id: String,
+    order_type: String,
+    price: String,
+    size: String,
+    usd: String,
+    fee: String,
+    slippage: String
+  },
+
+  // Target Position Sell Details
+  target: {
+    price: String,
+    usd: String,
+  },
+
+  // Closed Position Details
+  closed: {
+    session_id: String,
+    timestamp: Date,
+    execution_time: String,
+    order_id: String,
+    order_type: String,
+    price: String,
+    size: String,
+    usd: String,
+    fee: String,
+    slippage: String
+  },
+
+  // Status and log
+  status: String,
+  log: [String],
+
+});
+>>>>>>> bdae2d1817cd895d77c796582b4896d1175d0066
 
 var Phenotypes = require('../../../lib/phenotype')
 

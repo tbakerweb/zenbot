@@ -7,10 +7,10 @@ c.mongo = {}
 c.mongo.db = process.env.ZENBOT_MONGODB_DATABASE || 'zenbot4'
 
 // Must provide EITHER c.mongo.connectionString OR c.mongo.host,port,username,password
-c.mongo.connectionString = process.env.ZENBOT_MONGODB_CONNECTION_STRING || '' // 'mongodb://192.168.1.99:27017/?replicaSet=rs0&readPreference=primary&appname=Zenbot&ssl=false'
+c.mongo.connectionString = process.env.ZENBOT_MONGODB_CONNECTION_STRING || '' // 'mongodb://192.168.1.5:27017/?replicaSet=rs0&readPreference=primary&appname=Zenbot&ssl=false'
 
 // The following is not needed when c.mongo.connectionString is provided:
-c.mongo.host = process.env.ZENBOT_MONGODB_HOST || '192.168.1.99'
+c.mongo.host = process.env.ZENBOT_MONGODB_HOST || '192.168.1.5'
 c.mongo.port = process.env.ZENBOT_MONGODB_PORT || 27017
 c.mongo.username = process.env.ZENBOT_MONGO_USERNAME || null
 c.mongo.password = process.env.ZENBOT_MONGO_PASSWORD || null
@@ -284,5 +284,5 @@ c.output = {}
 // REST API
 c.output.api = {}
 c.output.api.on = process.env.ZENBOT_API_ENABLE || true
-c.output.api.ip = process.env.ZENBOT_API_IP || '192.168.1.99' // IPv4 or IPv6 address to listen on, uses all available interfaces if omitted
+c.output.api.ip = process.env.ZENBOT_API_IP || '192.168.1.5' // IPv4 or IPv6 address to listen on, uses all available interfaces if omitted
 c.output.api.port = process.env.ZENBOT_API_PORT || 17361
