@@ -4,16 +4,16 @@
 param (
     [Parameter()][String]$Exchange = 'binanceus',
     [Parameter()][String]$TradePair = 'BTC-USD',
-    [Parameter()][String]$Stratagy = 'tbw-positions',
-    [Parameter()][Int]$Days = 14,
-    [Parameter()][Int]$Generations = 3,
-    [Parameter()][Int]$PopulationSize = 20,
-    [Parameter()][Array]$Exchanges = @('gdax','binanceus','hbtc'),
+    [Parameter()][String]$Stratagy = 'multi',
+    [Parameter()][Int]$Days = 30,
+    [Parameter()][Int]$Generations = 5,
+    [Parameter()][Int]$PopulationSize = 100,
+    [Parameter()][Array]$Exchanges, #= @('gdax','binanceus','hbtc'),
     [Parameter()][Array]$TradePairs,
     [Parameter()][Array]$Stratagies,
-    [Parameter()][Int]$MaxCores = 2,
-    [Parameter()][Int]$CurrencyCapital = 650,
-    [Parameter()][String]$PopulationName = 'tbw-positions',
+    [Parameter()][Int]$MaxCores = 1,
+    [Parameter()][Int]$CurrencyCapital = 900,
+    [Parameter()][String]$PopulationName = 'muti-feb2021',
     [Parameter()][Switch]$AllSelectors,
     [Parameter()][Switch]$AllStratagies
 )
@@ -73,7 +73,6 @@ ForEach ($ExchangeName in $Exchanges) {
             $TradePairs.Add("$Asset-$Currency") | Out-Null
         }
     }
-
 
     ## For Each Trading Pair (Creating a Selector)
     ForEach ($TradePairName in $TradePairs) {
