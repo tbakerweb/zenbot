@@ -29,7 +29,6 @@ $ExchangeNames = (Get-ChildItem -Path $ExchangesPath -Directory).Name | Where-Ob
 ##
     Exchanges
         TradePairs
-            Stratagy
 
 #>
 
@@ -68,11 +67,16 @@ ForEach ($ExchangeName in $Exchanges) {
     
         ## Create the 'Normalized' Selector 
         $Selector = $ExchangeName + '.' + $TradePairName
+        Write-Host 'Getting Balance for: ' -NoNewline
+        Write-Host $Selector -ForegroundColor Cyan
+
         if($JSON){
-            node ./zenbot.js balance $Selector -c true --json true
+            node ./zenbot.js balance $Selector --json true
         } else {
             # node ./zenbot.js balance $Selector --conf tbw-local-binanceus-multi-BTC.js
-            node ./zenbot.js balance $Selector -c true
+            node ./zenbot.js balance $Selector
         }
+
+        Write-Host ''
     }
 }
